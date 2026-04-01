@@ -2,20 +2,16 @@
 
 ## 1. Project Overview
 
-This repository appears to be a **careers website application** for Aparaitech, with a React frontend and a Node/Express backend.
+This repository is a **careers web application** centered on frontend UI/UX for hiring discovery.
 
-Primary user-facing goals inferred from code:
-- Showcase company/culture content and hiring process.
-- Display open job positions from backend APIs.
-- Let candidates submit job applications from a frontend form.
-- Provide lightweight chatbot-style guidance for role discovery (frontend-only UI behavior).
+What it currently does:
+- Presents company branding and hiring content.
+- Lists open roles with filters and quick actions.
+- Provides an application form UI.
+- Includes a frontend chatbot widget with predefined interactions.
 
-Project type:
-- **Full-stack web application** (frontend + backend), currently with some integration gaps.
-
-Unknown – Needs clarification:
-- Whether this repository is intended for production use as-is or as a prototype/demo.
-- Whether application submission backend (`/api/applications/apply`) is in another service/repo.
+Project shape:
+- Full-stack repository, but current evolution is primarily **frontend-driven**.
 
 ## 2. Technology Stack
 
@@ -23,239 +19,247 @@ Frontend:
 - React 19
 - React Router DOM
 - Vite
-- Tailwind CSS (v4 via `@tailwindcss/vite`)
+- Tailwind CSS v4 (`@tailwindcss/vite`)
 - Framer Motion
-- Lucide React icons
+- Lucide React
 - Axios
 
 Backend:
-- Node.js + Express (ESM modules)
-- Mongoose (MongoDB ODM)
-- JWT (`jsonwebtoken`) for admin auth
-- `cookie-parser` for cookie-based token handling
-- `bcryptjs` for password hashing/checking
-- `cors`, `dotenv`
+- Node.js + Express (ESM)
+- Mongoose
+- JWT + cookie-based admin auth
+- bcryptjs
 
 Database:
-- MongoDB (via Mongoose)
-- Models: `Job`, `Admin`
+- MongoDB via Mongoose (`Job`, `Admin` schemas)
 
 Tooling:
 - ESLint (frontend)
-- npm scripts for dev/build/lint (frontend)
+- npm (frontend + backend)
 
-Not detected:
-- Docker
-- CI/CD workflows
-- Redis
-- Cloud provider-specific config
-- Automated backend tests
+## 3. Backend Overview
 
-## 3. Project Architecture
+Backend is organized as a simple REST API layer:
+- `GET /api/jobs`, `GET /api/jobs/:id` (public job reads)
+- `POST/PUT/DELETE /api/jobs` (admin-protected mutations)
+- `POST /api/admin/login` (admin auth)
 
-High-level architecture:
+Auth flow:
+- Admin login issues JWT and stores it in HTTP-only `token` cookie.
+- Middleware validates token and admin role for protected job routes.
 
-User Browser
-→ React Frontend (Vite app)
-→ HTTP calls (Axios/fetch)
-→ Express API (jobs + admin auth)
-→ Mongoose models
-→ MongoDB
-
-Additional auth path:
-- Admin login endpoint issues JWT in an HTTP-only cookie (`token`), and protected job mutation routes use middleware that validates this cookie token.
+Database usage:
+- Job CRUD uses Mongoose `Job` model.
+- Admin auth uses `Admin` model.
 
 Important note:
-- Backend server entry currently has `app.listen(...)` commented out, so runtime startup behavior is unclear unless launched elsewhere.
+- Backend server listen block is currently commented in `backend/server.js`.
 
-## 4. Folder Structure Explanation
+## 4. Frontend Architecture Map
 
-Top level:
-- `frontend/` — UI application
-- `backend/` — API and DB access
-- `AI_CONTEXT.md` — this context document
+Top-level rendering flow:
+- `main.jsx` → mounts `App.jsx`
+- `App.jsx` → global shell + routes
 
-Frontend (`frontend/`):
-- `src/main.jsx` — React bootstrap entry.
-- `src/App.jsx` — route wiring and global layout (`Navbar`, pages, `Footer`).
-- `src/pages/` — page-level screens (`HomePage`, `OpenPositionsPage`, `ApplyFormPage`).
-- `src/components/` — reusable UI components (navigation, cards, filters, chatbot, etc.).
-- `src/index.css` — shared Tailwind utility-style component classes.
-- `vite.config.js`, `tailwind.config.js`, `eslint.config.js` — build/style/lint config.
+Route map:
+- `/` → `HomePage`
+- `/positions` → `OpenPositionsPage`
+- `/apply` → `ApplyFormPage`
 
-Backend (`backend/`):
-- `server.js` — express app initialization and route mounting.
-- `routes/` — route modules (`job.routes.js`, `admin.routes.js`).
-- `controlllers/` — controller logic (note spelling includes triple “l”).
-- `models/` — Mongoose schemas (`Job`, `Admin`).
-- `middleware/adminAuth.js` — JWT cookie auth guard.
-- `config/db.js` — MongoDB connection helper.
-- `utils/generateToken.js` — JWT signing.
-- `seedAdmin.js` — admin seeding script with hardcoded credentials.
+Shared layout composition:
+- `App`
+  - `Navbar`
+  - Routed page content (`HomePage` / `OpenPositionsPage` / `ApplyFormPage`)
+  - `Footer`
 
-## 5. Core Features
+Detailed frontend map (Pages → Components → UI elements):
 
-1) Careers marketing content (frontend)
-- Home page with hero, culture, hiring process, testimonials, and chatbot section.
-- Uses Framer Motion for animations and dynamic text/counters.
+HomePage
+├ Hero content (animated heading + dynamic words)
+├ Stats/Culture/Hiring sections
+├ Dedicated chatbot preview section
+├ Floating `ChatbotWidget`
+└ Uses shared global layout (`Navbar` + `Footer` from `App`)
 
-2) Job listing and filtering
-- Fetches jobs from backend endpoint (`GET /api/jobs`).
-- Client-side filtering by search/location/type/experience.
-- Includes loading skeletons, quick-view modal, and favorites stored in localStorage.
+OpenPositionsPage
+├ `PageHeader`
+├ Sticky `FilterBar`
+├ Jobs grid of `JobCard`
+├ Loading skeleton state
+├ Empty state
+├ Favorites count
+└ Quick-view modal
 
-3) Application form UI
-- Candidate form with client-side validation and PDF resume check.
-- Submits multipart form data to `/api/applications/apply` on port 5000.
+ApplyFormPage
+├ `PageHeader`
+├ Application form fields + client validation
+├ Success and error states
+└ Resume upload input (PDF validation)
 
-4) Admin authentication (backend)
-- `POST /api/admin/login` validates admin email/password.
-- Returns token and sets HTTP-only cookie.
+Reusable component map:
+- `Navbar`: route nav + mobile menu behavior.
+- `Footer`: links, contact details, map, social links.
+- `PageHeader`: section/page heading wrapper.
+- `FilterBar`: search/location/type/experience filters.
+- `JobCard`: job summary, favorite action, quick-view trigger, apply CTA.
+- `ChatbotWidget`: toggleable assistant UI + canned/predefined interactions.
 
-5) Job management APIs (backend)
-- Public: list jobs, get job by id.
-- Protected by `adminAuth`: create/update/delete job.
+State management patterns:
+- Local component state (`useState`) for UI and interaction state.
+- `useEffect` for data fetches, scroll behavior, intervals, and localStorage sync.
+- No global state library (no Redux/Zustand/Context-driven app state for domain data).
 
-## 6. UI Structure
+API call locations:
+- Jobs fetch in `OpenPositionsPage` (`GET http://localhost:3000/api/jobs`).
+- Roles fetch in `ApplyFormPage` (`GET http://localhost:3000/api/jobs`).
+- Application submission in `ApplyFormPage` (`POST http://localhost:5000/api/applications/apply`).
 
-Pages:
-- Home page (`/`)
-- Open positions (`/positions`)
-- Apply form (`/apply`)
+Frontend data flow patterns:
+- Parent-driven filtering: `OpenPositionsPage` owns filter state and passes handler to `FilterBar`.
+- Card actions bubble up: `JobCard` triggers callbacks (`onToggleFavorite`, `onQuickView`) managed by `OpenPositionsPage`.
+- UI persistence: favorites stored and restored via localStorage in `OpenPositionsPage`.
 
-Layout system:
-- `App.jsx` wraps all pages with persistent `Navbar` and `Footer`.
-- Shared utility classes in `index.css`:
-  - `.btn-primary`, `.btn-secondary`
-  - `.card`, `.input-field`
-  - `.section-padding`
+## 5. Folder Structure
 
-Reusable components:
-- `Navbar`
-- `Footer`
-- `PageHeader`
-- `FilterBar`
-- `JobCard`
-- `ChatbotWidget`
+- `frontend/`
+  - `src/main.jsx` — React mount entry
+  - `src/App.jsx` — route shell + layout composition
+  - `src/pages/` — route pages (`HomePage`, `OpenPositionsPage`, `ApplyFormPage`)
+  - `src/components/` — reusable UI (`Navbar`, `Footer`, `PageHeader`, `FilterBar`, `JobCard`, `ChatbotWidget`)
+  - `src/index.css` — shared Tailwind utility class composition
+  - `src/assets/` — static assets (logo)
+  - `vite.config.js`, `tailwind.config.js`, `eslint.config.js` — tooling/config
+- `backend/`
+  - API routes, controllers, models, middleware, db config, utility scripts
 
-Navigation:
-- React Router (`BrowserRouter`, `Routes`, `Route`)
+## 6. Core Features
 
-UI framework/style:
-- Tailwind utility classes + custom component class shortcuts in `index.css`
-- Framer Motion for animated transitions
+Frontend-visible features:
+1. Marketing-rich Home page with animated sections.
+2. Open positions discovery with client-side filtering.
+3. Job cards with quick-view and favorite toggle actions.
+4. Loading skeletons and empty-state UX for job search.
+5. Candidate application form with client-side validation and submit flow.
+6. Chatbot widget with predefined prompts and rule-based replies.
 
-## 7. Key Files and Their Roles
+Backend-supported core features:
+1. Job CRUD API with admin protection on write routes.
+2. Admin login and cookie-based JWT auth.
 
-Frontend key files:
-- `frontend/src/main.jsx` → React app mount/bootstrap.
-- `frontend/src/App.jsx` → Routing and global page shell.
-- `frontend/src/pages/HomePage.jsx` → Primary marketing page + chatbot section.
-- `frontend/src/pages/OpenPositionsPage.jsx` → Jobs listing, filtering, skeleton loading, favorites, quick-view.
-- `frontend/src/pages/ApplyFormPage.jsx` → Application form, validation, submission.
-- `frontend/src/components/ChatbotWidget.jsx` → Frontend-only chatbot UI and canned intent responses.
-- `frontend/src/components/FilterBar.jsx` → Jobs filter controls.
-- `frontend/src/components/JobCard.jsx` → Individual job card rendering + actions.
-- `frontend/src/index.css` → Global style tokens/components.
-- `frontend/package.json` → frontend scripts/dependencies.
+## 7. UI Extension Points
 
-Backend key files:
-- `backend/server.js` → API setup and middleware registration.
-- `backend/routes/job.routes.js` → job route map.
-- `backend/routes/admin.routes.js` → admin login route.
-- `backend/controlllers/job.controller.js` → job CRUD/business logic.
-- `backend/controlllers/admin.controller.js` → admin login flow.
-- `backend/middleware/adminAuth.js` → protected route authorization.
-- `backend/models/Job.js` → Job schema definition.
-- `backend/models/Admin.js` → Admin schema definition.
-- `backend/config/db.js` → MongoDB connection logic.
-- `backend/seedAdmin.js` → helper script to create initial admin user.
-- `backend/package.json` → backend dependencies.
+These are safe insertion points for future frontend features:
 
-## 8. Data Flow
+1. `HomePage`
+- Add new sections between existing blocks (hero/culture/hiring/testimonials/chatbot preview).
+- Extend animated stats and testimonials with additional cards/data.
 
-### A) Jobs listing flow
-1. Frontend loads Open Positions page.
-2. `OpenPositionsPage` calls `GET http://localhost:3000/api/jobs`.
-3. Backend `job.routes.js` routes to `getAllJobs` controller.
-4. Controller queries `Job` model via Mongoose and returns JSON.
-5. Frontend stores jobs in state and applies client-side filters.
+2. `OpenPositionsPage`
+- Extend `FilterBar` inputs and filter criteria.
+- Add pagination/infinite scroll below jobs grid.
+- Add richer modal content/side panel for quick-view.
+- Add sorting, compare mode, or bookmarked jobs panel.
 
-### B) Admin auth + protected job mutation flow
-1. Admin posts credentials to `POST /api/admin/login`.
-2. Backend validates credentials against `Admin` model.
-3. JWT is generated and set in `token` HTTP-only cookie.
-4. Protected routes (`POST/PUT/DELETE /api/jobs`) require `adminAuth` middleware.
-5. Middleware verifies cookie token and role.
+3. `JobCard`
+- Add badges (match score, urgency, remote status chip).
+- Add micro-interactions (hover details, tooltips, save feedback).
 
-### C) Candidate apply flow
-1. User fills `ApplyFormPage` form.
-2. Frontend validates fields and PDF resume type.
-3. Frontend submits `FormData` to `http://localhost:5000/api/applications/apply`.
-4. Backend handling for this endpoint is **not present in this repository**.
+4. `ApplyFormPage`
+- Add multi-step UI.
+- Add helper hints for field completion.
+- Add preview section before submit.
 
-Unknown – Needs clarification:
-- Which service owns `/api/applications/apply` and how it should be run in local/dev.
+5. `ChatbotWidget`
+- Expand predefined prompt groups.
+- Add conversation memory UI.
+- Add context-aware suggestions from current page.
 
-## 9. Known Limitations
+6. Shared layout/components
+- `Navbar` and `Footer` are global, suitable for global nav/help/announcement additions.
+- `PageHeader` can be extended with breadcrumbs, metadata, or action slots.
 
-1. Backend startup ambiguity
-- `app.listen(...)` is commented out in `backend/server.js`.
+## 8. Data Sources
 
-2. Integration mismatch in apply endpoint
-- Frontend apply submits to port 5000 and route not defined in current backend.
+Frontend data origins:
+1. Jobs API
+- Source: `GET http://localhost:3000/api/jobs`
+- Used in: `OpenPositionsPage`, `ApplyFormPage`
 
-3. Hardcoded API base URLs in frontend
-- Jobs calls use explicit `http://localhost:3000`.
-- Apply submits to explicit `http://localhost:5000`.
+2. Application submission endpoint
+- Source: `POST http://localhost:5000/api/applications/apply`
+- Used in: `ApplyFormPage`
 
-4. Potential logic bug in job delete controller
-- `deleteJob` checks `if (!deleteJob)` instead of `if (!deletedJob)`.
+3. Local browser storage
+- `favoriteJobs` key in localStorage
+- Used in: `OpenPositionsPage`
+
+4. In-component static data
+- Home page content arrays (testimonials, stats, culture, hiring steps)
+- Chatbot canned responses + predefined interaction list
+
+5. Route/query params
+- `ApplyFormPage` consumes `role` from URL query string
+
+## 9. Styling Architecture
+
+Styling approach:
+- Tailwind-first utility classes in JSX.
+- Shared semantic class patterns defined in `src/index.css` (`.btn-primary`, `.btn-secondary`, `.card`, `.input-field`, `.section-padding`).
+- Theme direction currently: dark background + emerald accents.
+
+Animation architecture:
+- Framer Motion for section entrance, transitions, and micro-interactions.
+- Some dynamic UI timing via `useEffect` intervals (hero words/stat counters).
+
+Reusable visual patterns:
+- Card-based sections (`.card`).
+- Gradient accents for CTA and emphasis.
+- Consistent spacing through `.section-padding` and Tailwind spacing scales.
+
+## 10. AI Feature Integration Points
+
+Frontend-first AI-ready components:
+
+1. `ChatbotWidget`
+- Current rule-based replies can be upgraded to model-backed responses.
+- Predefined interaction chips can map to AI intents.
+
+2. `OpenPositionsPage`
+- AI-powered ranking/sorting of jobs by inferred candidate fit.
+- Natural language filtering input for jobs.
+
+3. `JobCard`
+- Add AI match score badges and explanation snippets.
+
+4. `ApplyFormPage`
+- Resume-guided field suggestions and skill extraction.
+- AI feedback before submit (completeness/readability checks).
+
+5. `HomePage`
+- Personalized role recommendations in hero/chatbot section.
+
+## 11. Known Limitations
+
+1. Backend runtime setup ambiguity
+- `app.listen(...)` is commented out in backend entry file.
+
+2. Hardcoded API hosts/ports in frontend
+- Jobs and apply URLs are hardcoded to localhost endpoints.
+
+3. Apply endpoint mismatch
+- Frontend submits to `/api/applications/apply` on port 5000, while this backend does not expose that route.
+
+4. Potential delete controller bug
+- Job delete controller checks `if (!deleteJob)` instead of checking the deleted document variable.
 
 5. Hardcoded admin seed credentials
 - `seedAdmin.js` contains plaintext default credentials.
 
-6. No explicit environment template file observed
-- `.env.example` not found in scanned files.
+6. No centralized frontend API client abstraction
+- API calls are embedded directly inside page components.
 
-7. Validation and consistency gaps
-- Some job type strings in frontend filters may not match backend enum capitalization/hyphen style.
+7. No global state layer for domain data
+- Cross-page data/state relies on local component state and localStorage.
 
-8. Test coverage appears minimal
-- Frontend has build/lint scripts; backend has placeholder `test` script only.
-
-## 10. Potential AI Integration Points
-
-1. Chatbot enhancement (existing UI is a strong starting point)
-- Replace canned responses with LLM-backed role guidance.
-- Add context-aware suggestions from current job inventory.
-
-2. Smart job recommendation engine
-- Recommend jobs based on entered skills, resume text, and prior interactions.
-
-3. Resume intelligence
-- Parse uploaded resumes and auto-suggest best matching roles.
-
-4. Semantic search on jobs
-- Natural language queries (e.g., “remote backend role with Node and 2+ years”).
-
-5. Candidate assistance workflow
-- AI-assisted form filling hints, interview prep tips, and FAQ summarization.
-
-6. Admin analytics assistant
-- Hiring funnel summaries, role demand trends, and candidate quality insights.
-
-## 11. Questions for the Project Owner
-
-1. Is this repository meant to be a single deployable system, or is apply-submission handled by a separate backend service?
-2. What is the authoritative backend URL and environment strategy (dev/staging/prod)?
-3. Should `backend/server.js` be the runtime entrypoint (and if so, should `app.listen` be enabled)?
-4. Do you want cookie-based admin auth only, or also token-in-header support?
-5. Should favorite jobs be persisted per user account in backend instead of localStorage?
-6. Is there an expected authentication flow for candidates (currently no user auth in frontend/backend)?
-7. What are the required environment variables and their expected names? (`MONGO_URL`, `JWT_SECRET`, etc.)
-8. Are there security requirements for admin seeding (remove hardcoded credentials, rotate secrets, etc.)?
-9. Should job filters be server-side for scalability, or remain client-side?
-10. What level of accessibility/compliance is expected (WCAG targets, keyboard support, screen-reader testing)?
-11. Is there a product roadmap priority among chatbot improvements, recommendation engine, and analytics?
-
+8. Limited automated test coverage
+- Frontend emphasizes build/lint scripts; backend test script is placeholder.
