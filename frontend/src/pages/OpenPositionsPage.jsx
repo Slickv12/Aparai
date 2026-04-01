@@ -130,7 +130,7 @@ const OpenPositionsPage = () => {
           title="Open Positions"
           subtitle="Find your perfect role and join our team of innovators"
         >
-          <div className="flex items-center space-x-2 text-emerald-100/80 mt-4">
+          <div className="flex items-center space-x-2 text-slate-100/80 mt-4">
             <Briefcase className="h-5 w-5" />
             <span>
               {jobCount} open position{jobCount !== 1 ? "s" : ""}
@@ -146,11 +146,11 @@ const OpenPositionsPage = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 xl:gap-6">
             {[...Array(4)].map((_, idx) => (
               <div key={idx} className="card p-6 animate-pulse">
-                <div className="h-6 w-2/3 bg-emerald-500/20 rounded mb-4"></div>
-                <div className="h-4 w-1/2 bg-emerald-500/20 rounded mb-6"></div>
-                <div className="h-4 w-full bg-emerald-500/10 rounded mb-2"></div>
-                <div className="h-4 w-5/6 bg-emerald-500/10 rounded mb-6"></div>
-                <div className="h-9 w-28 bg-emerald-500/20 rounded"></div>
+                <div className="h-6 w-2/3 bg-purple-500/20 rounded mb-4"></div>
+                <div className="h-4 w-1/2 bg-purple-500/20 rounded mb-6"></div>
+                <div className="h-4 w-full bg-purple-500/10 rounded mb-2"></div>
+                <div className="h-4 w-5/6 bg-purple-500/10 rounded mb-6"></div>
+                <div className="h-9 w-28 bg-purple-500/20 rounded"></div>
               </div>
             ))}
           </div>
@@ -179,13 +179,13 @@ const OpenPositionsPage = () => {
           </motion.div>
         ) : (
           <div className="text-center py-16">
-            <div className="bg-gradient-to-r from-emerald-500/20 to-green-500/10 w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6">
-              <Briefcase className="h-12 w-12 text-emerald-300" />
+            <div className="bg-gradient-to-r from-purple-500/20 to-cyan-500/10 w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6">
+              <Briefcase className="h-12 w-12 text-cyan-300" />
             </div>
-            <h3 className="text-2xl font-bold text-emerald-100 mb-3">
+            <h3 className="text-2xl font-bold text-slate-100 mb-3">
               No positions match your filters
             </h3>
-            <p className="text-emerald-100/80 mb-8">
+            <p className="text-slate-100/80 mb-8">
               Try adjusting your search criteria or check back later for new openings.
             </p>
             <button
@@ -204,12 +204,12 @@ const OpenPositionsPage = () => {
           </div>
         )}
 
-        <div className="mt-12 pt-8 border-t border-emerald-500/20 text-center">
-          <p className="text-emerald-100/80">
+        <div className="mt-12 pt-8 border-t border-purple-500/20 text-center">
+          <p className="text-slate-100/80">
             Don't see the perfect role?{" "}
             <a
               href="mailto:careers@aparaitech.com"
-              className="text-emerald-300 hover:text-emerald-200 font-medium"
+              className="text-cyan-300 hover:text-cyan-200 font-medium"
             >
               Send us your resume
             </a>{" "}
@@ -218,8 +218,8 @@ const OpenPositionsPage = () => {
         </div>
 
         {favoriteJobIds.length > 0 && (
-          <div className="mt-6 text-sm text-emerald-300 flex items-center justify-center gap-2">
-            <Heart className="h-4 w-4 fill-emerald-300" />
+          <div className="mt-6 text-sm text-cyan-300 flex items-center justify-center gap-2">
+            <Heart className="h-4 w-4 fill-cyan-300" />
             Saved jobs: {favoriteJobIds.length}
           </div>
         )}
@@ -229,17 +229,17 @@ const OpenPositionsPage = () => {
             <div className="w-full max-w-2xl card p-6 relative">
               <button
                 type="button"
-                className="absolute right-4 top-4 p-2 rounded-full bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-200"
+                className="absolute right-4 top-4 p-2 rounded-full bg-purple-500/10 hover:bg-purple-500/20 text-cyan-200"
                 onClick={() => setQuickViewJob(null)}
               >
                 <X className="h-4 w-4" />
               </button>
-              <h3 className="text-2xl font-bold text-emerald-100 mb-2">{quickViewJob.title}</h3>
-              <p className="text-emerald-300 mb-4">{quickViewJob.department}</p>
-              <p className="text-emerald-100/80 mb-4">{quickViewJob.description}</p>
+              <h3 className="text-2xl font-bold text-slate-100 mb-2">{quickViewJob.title}</h3>
+              <p className="text-cyan-300 mb-4">{quickViewJob.department}</p>
+              <p className="text-slate-100/80 mb-4">{quickViewJob.description}</p>
               <div className="flex flex-wrap gap-2 mb-6">
                 {(quickViewJob.techStack || []).map((tech, i) => (
-                  <span key={i} className="px-2 py-1 text-xs rounded-full bg-emerald-500/15 text-emerald-200">{tech}</span>
+                  <span key={i} className="px-2 py-1 text-xs rounded-full bg-purple-500/15 text-cyan-200">{tech}</span>
                 ))}
               </div>
               <Link to={`/apply?role=${encodeURIComponent(quickViewJob.title)}`} className="btn-primary">
