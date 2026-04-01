@@ -107,6 +107,7 @@ const ChatbotWidget = () => {
   const [chatMessages, setChatMessages] = useState([]);
   const [currentOptions, setCurrentOptions] = useState([]);
   const [currentConversationState, setCurrentConversationState] = useState("start");
+  const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef(null);
 
   const initialBotMessage = useMemo(() => chatbotFlows.start.message, []);
@@ -129,10 +130,14 @@ const ChatbotWidget = () => {
     setChatMessages((prev) => [...prev, { from: "user", text: selectedOption }]);
 
     if (selectedOption === "View Open Positions") {
-      setChatMessages((prev) => [
-        ...prev,
-        { from: "bot", text: "Opening available roles now. You can use filters to narrow results." },
-      ]);
+      setIsTyping(true);
+      setTimeout(() => {
+        setChatMessages((prev) => [
+          ...prev,
+          { from: "bot", text: "Opening available roles now. You can use filters to narrow results." },
+        ]);
+        setIsTyping(false);
+      }, 700);
       navigate("/positions");
       setCurrentConversationState("start");
       setCurrentOptions(chatbotFlows.start.options || []);
@@ -144,8 +149,12 @@ const ChatbotWidget = () => {
     if (flow.redirectState) {
       const redirected = chatbotFlows[flow.redirectState] || chatbotFlows.start;
       setCurrentConversationState(flow.redirectState);
-      setChatMessages((prev) => [...prev, { from: "bot", text: redirected.message }]);
-      setCurrentOptions(redirected.options || []);
+      setIsTyping(true);
+      setTimeout(() => {
+        setChatMessages((prev) => [...prev, { from: "bot", text: redirected.message }]);
+        setCurrentOptions(redirected.options || []);
+        setIsTyping(false);
+      }, 700);
       return;
     }
 
@@ -158,16 +167,20 @@ const ChatbotWidget = () => {
         : []),
     ];
 
-    setChatMessages((prev) => [...prev, ...botPayload]);
-    setCurrentOptions(flow.options || chatbotFlows.start.options || []);
+    setIsTyping(true);
+    setTimeout(() => {
+      setChatMessages((prev) => [...prev, ...botPayload]);
+      setCurrentOptions(flow.options || chatbotFlows.start.options || []);
+      setIsTyping(false);
+    }, 700);
   };
 
   return (
     <div className="fixed bottom-6 right-6 z-[70]">
       {chatbotOpen && (
-        <div className="w-[92vw] max-w-md h-[560px] mb-4 rounded-2xl border border-emerald-500/30 bg-slate-900/95 backdrop-blur-xl shadow-2xl shadow-emerald-500/10 flex flex-col overflow-hidden">
-          <div className="flex items-center justify-between px-4 py-3 border-b border-emerald-500/20 bg-gradient-to-r from-emerald-700/40 to-green-600/30">
-            <div className="flex items-center gap-2 text-emerald-100 font-semibold">
+        <div className="w-[92vw] max-w-md h-[560px] mb-4 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-lg shadow-2xl shadow-purple-500/20 flex flex-col overflow-hidden">
+          <div className="flex items-center justify-between px-4 py-3 border-b border-white/10 bg-gradient-to-r from-purple-600/30 to-cyan-500/20">
+            <div className="flex items-center gap-2 text-slate-100 font-semibold">
               <Bot className="h-4 w-4" />
               Career Assistant
             </div>
@@ -175,7 +188,7 @@ const ChatbotWidget = () => {
               <button
                 type="button"
                 onClick={restartConversation}
-                className="p-1.5 rounded-md text-emerald-100 hover:bg-emerald-500/20"
+                className="p-1.5 rounded-md text-slate-100 hover:bg-white/10"
                 aria-label="Restart Chat"
               >
                 <RefreshCw className="h-4 w-4" />
@@ -183,7 +196,7 @@ const ChatbotWidget = () => {
               <button
                 type="button"
                 onClick={() => setChatbotOpen(false)}
-                className="p-1.5 rounded-md text-emerald-100 hover:bg-emerald-500/20"
+                className="p-1.5 rounded-md text-slate-100 hover:bg-white/10"
                 aria-label="Close Chat"
               >
                 <X className="h-4 w-4" />
@@ -197,25 +210,35 @@ const ChatbotWidget = () => {
                 key={`${msg.from}-${idx}`}
                 className={`max-w-[88%] px-3 py-2 rounded-xl text-sm animate-[fadeIn_.2s_ease-in] ${
                   msg.from === "user"
-                    ? "ml-auto bg-emerald-600 text-white"
-                    : "bg-slate-800 border border-emerald-500/20 text-emerald-100"
+                    ? "ml-auto bg-gradient-to-r from-purple-600 to-cyan-500 text-white"
+                    : "bg-white/5 border border-white/10 text-slate-100"
                 }`}
               >
                 {msg.text}
               </div>
             ))}
+            {isTyping && (
+              <div className="max-w-[88%] px-3 py-2 rounded-xl text-sm bg-white/5 border border-white/10 text-slate-100">
+                AI is typing
+                <span className="inline-flex ml-1 gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-300 animate-bounce [animation-delay:0ms]" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-300 animate-bounce [animation-delay:120ms]" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-300 animate-bounce [animation-delay:240ms]" />
+                </span>
+              </div>
+            )}
             <div ref={messagesEndRef} />
           </div>
 
-          <div className="p-3 border-t border-emerald-500/20 bg-slate-900">
-            <div className="text-xs text-emerald-200/70 mb-2">Conversation state: {currentConversationState}</div>
+          <div className="p-3 border-t border-white/10 bg-white/5">
+            <div className="text-xs text-slate-300/80 mb-2">Conversation state: {currentConversationState}</div>
             <div className="flex flex-wrap gap-2">
               {currentOptions.map((option) => (
                 <button
                   key={option}
                   type="button"
                   onClick={() => handleOptionClick(option)}
-                  className="px-3 py-2 rounded-lg text-xs sm:text-sm bg-emerald-500/15 border border-emerald-500/30 text-emerald-100 hover:bg-emerald-500/25 transition-all duration-200 hover:-translate-y-0.5"
+                  className="px-3 py-2 rounded-lg text-xs sm:text-sm bg-white/10 border border-white/10 text-slate-100 hover:bg-purple-500/30 transition-all duration-200 hover:-translate-y-0.5"
                 >
                   {option}
                 </button>
@@ -228,7 +251,7 @@ const ChatbotWidget = () => {
       <button
         type="button"
         onClick={() => setChatbotOpen((prev) => !prev)}
-        className="h-14 w-14 rounded-full bg-gradient-to-r from-emerald-500 to-green-500 text-white shadow-lg hover:scale-105 transition-transform flex items-center justify-center"
+        className="h-14 w-14 rounded-full bg-gradient-to-r from-purple-600 to-cyan-500 text-white shadow-lg hover:scale-105 transition-transform flex items-center justify-center"
         aria-label="Toggle Chat Assistant"
       >
         <MessageCircle className="h-6 w-6" />

@@ -119,7 +119,12 @@ const OpenPositionsPage = () => {
   const jobCount = filteredJobs.length;
 
   return (
-    <div className="min-h-screen">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+      className="min-h-screen"
+    >
       <div className="section-padding py-8 md:py-10">
         <PageHeader
           title="Open Positions"
@@ -244,7 +249,7 @@ const OpenPositionsPage = () => {
           </div>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 };
 

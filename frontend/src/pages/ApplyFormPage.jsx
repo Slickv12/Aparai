@@ -342,7 +342,12 @@ const ApplyFormPage = () => {
   }, [isSubmitted]);
 
   return (
-    <div className="min-h-screen">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+      className="min-h-screen"
+    >
       <div className="section-padding py-8">
         <PageHeader
           title="Apply Now"
@@ -697,7 +702,7 @@ const ApplyFormPage = () => {
                         <p className="text-sm text-emerald-200 mb-2">Resume Score:</p>
                         <div className="w-full bg-slate-800 rounded-full h-3 border border-emerald-500/20 overflow-hidden">
                           <div
-                            className="h-full bg-gradient-to-r from-emerald-500 to-green-500 transition-all duration-700"
+                            className="h-full bg-gradient-to-r from-purple-600 to-cyan-500 transition-all duration-1000"
                             style={{ width: `${resumeScore}%` }}
                           />
                         </div>
@@ -783,7 +788,7 @@ const ApplyFormPage = () => {
           )}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

@@ -153,13 +153,47 @@ const HomePage = () => {
   ];
 
   return (
-    <div className="min-h-screen">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+      className="min-h-screen"
+    >
       {/* Hero Section - Enhanced */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-emerald-900">
+      <section className="relative overflow-hidden bg-gradient-to-br from-[#0B0F19] via-[#1f1538] to-[#0b1b2e]">
         {/* Animated background elements */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-emerald-500/10 via-transparent to-transparent"></div>
-        <div className="absolute top-20 left-1/4 w-64 h-64 md:w-96 md:h-96 bg-emerald-500/5 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 right-1/4 w-64 h-64 md:w-96 md:h-96 bg-indigo-500/5 rounded-full blur-3xl"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-purple-500/20 via-transparent to-transparent"></div>
+        <motion.div
+          animate={{ x: [0, 20, 0], y: [0, -20, 0] }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-20 left-1/4 w-64 h-64 md:w-96 md:h-96 bg-purple-500/20 rounded-full blur-3xl"
+        />
+        <motion.div
+          animate={{ x: [0, -15, 0], y: [0, 15, 0] }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute bottom-20 right-1/4 w-64 h-64 md:w-96 md:h-96 bg-cyan-500/20 rounded-full blur-3xl"
+        />
+        <motion.div
+          animate={{ x: [0, 10, 0], y: [0, 12, 0] }}
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-10 right-20 w-40 h-40 bg-pink-400/20 rounded-full blur-3xl"
+        />
+
+        {/* Subtle particle field */}
+        <div className="absolute inset-0 pointer-events-none">
+          {Array.from({ length: 24 }).map((_, i) => (
+            <motion.span
+              key={i}
+              className={`absolute w-1.5 h-1.5 rounded-full ${i % 3 === 0 ? "bg-cyan-300/60" : i % 3 === 1 ? "bg-purple-300/60" : "bg-pink-300/60"}`}
+              style={{
+                left: `${(i * 37) % 100}%`,
+                top: `${(i * 23) % 100}%`,
+              }}
+              animate={{ y: [0, -12, 0], opacity: [0.25, 0.8, 0.25] }}
+              transition={{ duration: 4 + (i % 5), repeat: Infinity, ease: "easeInOut" }}
+            />
+          ))}
+        </div>
         
         {/* Grid overlay - Fixed */}
         <div className="absolute inset-0 opacity-[0.02]" style={{
@@ -632,7 +666,7 @@ const HomePage = () => {
           </motion.div>
         </div>
       </section>
-    </div>
+    </motion.div>
   );
 };
 

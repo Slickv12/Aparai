@@ -4,7 +4,7 @@ import { MapPin, Briefcase, Clock, ChevronRight, Laptop, Heart, Eye } from 'luci
 
 const JobCard = ({ job, isFavorite, onToggleFavorite, onQuickView }) => {
   return (
-    <div className="card p-5 h-full hover:shadow-lg transition-all duration-300 group">
+    <div className="card p-5 h-full transition-all duration-300 group hover:scale-105 hover:shadow-xl hover:shadow-purple-500/30">
       <div className="flex flex-col h-full">
         <div className="flex items-start justify-between mb-4">
           <div>
