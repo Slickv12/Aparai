@@ -8,13 +8,13 @@ const Footer = () => {
   const socialLinks = [
     {
       name: 'LinkedIn',
-      href: 'https://www.linkedin.com/',
+      href: 'https://www.linkedin.com/in/vaibhav-shinde-71a1033a9/',
       icon: Linkedin,
       className: 'from-emerald-600 to-green-700',
     },
     {
       name: 'Instagram',
-      href: 'https://www.instagram.com/',
+      href: 'https://www.instagram.com/vaibhav_shinde205/?hl=en',
       icon: Instagram,
       className: 'from-emerald-500 to-lime-600',
     },
@@ -61,11 +61,11 @@ const Footer = () => {
               </li>
               <li className="flex items-center space-x-3">
                 <Mail className="h-5 w-5 text-emerald-300" />
-                <a href="mailto:info@aparaitech.org" className="text-emerald-100/80 hover:text-emerald-300 transition-colors">info@aparaitech.org</a>
+                <a href="mailto:info@aparaitech.org" className="text-emerald-100/80 hover:text-emerald-300 transition-colors">vaibhavs27106@gmail.com</a>
               </li>
               <li className="flex items-center space-x-3">
                 <Phone className="h-5 w-5 text-emerald-300" />
-                <span className="text-emerald-100/80">+91 63643 26342</span>
+                <span className="text-emerald-100/80">+91 8668 271087</span>
               </li>
             </ul>
           </div>
