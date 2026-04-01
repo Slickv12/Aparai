@@ -5,8 +5,16 @@ const QUICK_REPLIES = {
   jobs: "You can explore all open roles on the Open Roles page. Use filters for location, type, and skills.",
   apply: "To apply, go to the Apply page, fill your details, and upload your resume in PDF format.",
   culture: "Aparaitech focuses on growth, innovation, and collaborative engineering culture.",
+  timeline: "Typical flow: Apply → HR screening → Technical interview → Team round → Offer.",
+  remote: "Yes, we post both remote and hybrid roles. Use the location filter to narrow these quickly.",
   default: "Thanks for your message! Our team will assist you soon. Meanwhile, check Open Roles and Apply pages.",
 };
+
+const PREDEFINED_INTERACTIONS = [
+  { label: "Suggest roles", prompt: "Can you suggest roles for React and Node.js?" },
+  { label: "Hiring timeline", prompt: "What is the hiring timeline?" },
+  { label: "Remote jobs", prompt: "Do you have remote jobs?" },
+];
 
 const ChatbotWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,18 +28,22 @@ const ChatbotWidget = () => {
     if (t.includes("job") || t.includes("role") || t.includes("position")) return QUICK_REPLIES.jobs;
     if (t.includes("apply") || t.includes("application") || t.includes("resume")) return QUICK_REPLIES.apply;
     if (t.includes("culture") || t.includes("team") || t.includes("work")) return QUICK_REPLIES.culture;
+    if (t.includes("timeline") || t.includes("process")) return QUICK_REPLIES.timeline;
+    if (t.includes("remote") || t.includes("hybrid")) return QUICK_REPLIES.remote;
     return QUICK_REPLIES.default;
   };
 
-  const handleSend = () => {
-    if (!input.trim()) return;
+  const sendMessage = (text) => {
+    if (!text.trim()) return;
 
-    const userMsg = { from: "user", text: input.trim() };
-    const botMsg = { from: "bot", text: getReply(input) };
+    const userMsg = { from: "user", text: text.trim() };
+    const botMsg = { from: "bot", text: getReply(text) };
 
     setMessages((prev) => [...prev, userMsg, botMsg]);
     setInput("");
   };
+
+  const handleSend = () => sendMessage(input);
 
   return (
     <div className="fixed bottom-6 right-6 z-[60]">
@@ -48,6 +60,18 @@ const ChatbotWidget = () => {
           </div>
 
           <div className="flex-1 overflow-y-auto p-4 space-y-3">
+            <div className="flex flex-wrap gap-2">
+              {PREDEFINED_INTERACTIONS.map((item) => (
+                <button
+                  key={item.label}
+                  type="button"
+                  onClick={() => sendMessage(item.prompt)}
+                  className="px-2.5 py-1.5 text-xs rounded-full bg-emerald-500/15 border border-emerald-500/25 text-emerald-200 hover:bg-emerald-500/25"
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
             {messages.map((msg, idx) => (
               <div
                 key={idx}
