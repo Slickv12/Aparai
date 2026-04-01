@@ -85,7 +85,7 @@ const HomePage = () => {
     quote:
       "The best part is the team collaboration and clean engineering culture. I’ve grown a lot in React and system thinking here.",
     avatar: "AK",
-    color: "bg-gradient-to-br from-emerald-500 to-cyan-400",
+    color: "bg-gradient-to-br from-purple-500 to-cyan-400",
     rating: 5
   },
   {
@@ -105,7 +105,7 @@ const HomePage = () => {
     quote:
       "I love the code quality standards and the guidance from seniors. Every sprint feels impactful and the work is meaningful.",
     avatar: "KP",
-    color: "bg-gradient-to-br from-emerald-500 to-teal-400",
+    color: "bg-gradient-to-br from-purple-500 to-teal-400",
     rating: 5
   },
 ];
@@ -115,13 +115,13 @@ const HomePage = () => {
       icon: <Users className="h-5 w-5 sm:h-6 sm:w-6" />,
       title: 'Collaborative Environment',
       description: 'Work with talented peers who support and challenge you',
-      gradient: 'from-emerald-500 to-cyan-500'
+      gradient: 'from-purple-500 to-cyan-500'
     },
     {
       icon: <BookOpen className="h-5 w-5 sm:h-6 sm:w-6" />,
       title: 'Continuous Learning',
       description: '$2,000 annual budget for courses, conferences, and books',
-      gradient: 'from-green-500 to-purple-500'
+      gradient: 'from-cyan-500 to-purple-500'
     },
     {
       icon: <Globe className="h-5 w-5 sm:h-6 sm:w-6" />,
@@ -213,10 +213,10 @@ const HomePage = () => {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2, duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-gradient-to-r from-emerald-500/10 to-emerald-500/10 border border-white/10 backdrop-blur-sm mb-6 sm:mb-8"
+              className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-gradient-to-r from-purple-500/10 to-cyan-500/10 border border-white/10 backdrop-blur-sm mb-6 sm:mb-8"
             >
-              <Sparkles className="h-3 w-3 sm:h-4 sm:w-4 text-emerald-400" />
-              <span className="text-xs sm:text-sm font-semibold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
+              <Sparkles className="h-3 w-3 sm:h-4 sm:w-4 text-cyan-400" />
+              <span className="text-xs sm:text-sm font-semibold bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">
                 We're Hiring Top Talent
               </span>
             </motion.div>
@@ -224,10 +224,10 @@ const HomePage = () => {
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-6 sm:mb-8 tracking-tight">
               Shape the Future at{' '}
               <span className="relative">
-                <span className="bg-gradient-to-r from-emerald-400 via-emerald-300 to-emerald-400 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-purple-400 via-cyan-300 to-cyan-400 bg-clip-text text-transparent">
                   Aparaitech
                 </span>
-                <div className="absolute -bottom-1 sm:-bottom-2 left-0 right-0 h-0.5 sm:h-1 bg-gradient-to-r from-emerald-500 to-emerald-500 rounded-full"></div>
+                <div className="absolute -bottom-1 sm:-bottom-2 left-0 right-0 h-0.5 sm:h-1 bg-gradient-to-r from-purple-600 to-cyan-500 rounded-full"></div>
               </span>
             </h1>
             
@@ -235,7 +235,7 @@ const HomePage = () => {
               Build groundbreaking enterprise solutions with cutting-edge technology.
               Your career, accelerated by innovation and meaningful impact for
               {' '}
-              <span className="inline-block min-w-[170px] text-left font-semibold text-emerald-300">
+              <span className="inline-block min-w-[170px] text-left font-semibold text-cyan-300">
                 <AnimatePresence mode="wait">
                   <motion.span
                     key={dynamicWords[wordIndex]}
@@ -256,7 +256,7 @@ const HomePage = () => {
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="w-full sm:w-auto">
                 <Link 
                   to="/positions" 
-                  className="group relative inline-flex items-center justify-center w-full sm:w-auto px-6 py-3.5 sm:px-8 sm:py-4 text-sm sm:text-base font-semibold text-white bg-gradient-to-r from-emerald-600 to-emerald-600 rounded-lg sm:rounded-xl hover:from-emerald-700 hover:to-emerald-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-emerald-500/25"
+                  className="group relative inline-flex items-center justify-center w-full sm:w-auto px-6 py-3.5 sm:px-8 sm:py-4 text-sm sm:text-base font-semibold text-white bg-gradient-to-r from-purple-600 to-cyan-500 rounded-lg sm:rounded-xl hover:from-purple-700 hover:to-cyan-600 transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-purple-500/30"
                 >
                   <span>Explore Opportunities</span>
                   <ChevronRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 transition-transform" />
@@ -300,7 +300,7 @@ const HomePage = () => {
           className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2"
         >
           <div className="w-5 h-8 sm:w-6 sm:h-10 border-2 border-white/30 rounded-full flex justify-center">
-            <div className="w-1 h-2 sm:h-3 bg-gradient-to-b from-emerald-400 to-emerald-400 rounded-full mt-2"></div>
+            <div className="w-1 h-2 sm:h-3 bg-gradient-to-b from-purple-400 to-cyan-400 rounded-full mt-2"></div>
           </div>
         </motion.div>
       </section>
@@ -318,16 +318,16 @@ const HomePage = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
-              className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-gradient-to-r from-emerald-50 to-emerald-50 border border-emerald-100 mb-4 sm:mb-6"
+              className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-gradient-to-r from-purple-500/10 to-cyan-500/10 border border-purple-300/30 mb-4 sm:mb-6"
             >
-              <Target className="h-3 w-3 sm:h-4 sm:w-4 text-emerald-600" />
-              <span className="text-xs sm:text-sm font-semibold text-emerald-700">Why Choose Us</span>
+              <Target className="h-3 w-3 sm:h-4 sm:w-4 text-purple-400" />
+              <span className="text-xs sm:text-sm font-semibold text-purple-300">Why Choose Us</span>
             </motion.div>
             
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-emerald-100 mb-4 sm:mb-6">
-              Build Your Career <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-emerald-600">With Purpose</span>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-slate-100 mb-4 sm:mb-6">
+              Build Your Career <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-cyan-500">With Purpose</span>
             </h2>
-            <p className="text-base sm:text-lg md:text-xl text-emerald-100/80 max-w-2xl mx-auto px-4 leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl text-slate-100/80 max-w-2xl mx-auto px-4 leading-relaxed">
               Join a culture where innovation meets impact, and your growth is our priority
             </p>
           </div>
@@ -344,21 +344,21 @@ const HomePage = () => {
                 whileHover={{ y: -4, transition: { duration: 0.2 } }}
                 className="relative group"
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-emerald-500 rounded-xl sm:rounded-2xl opacity-0 group-hover:opacity-10 blur transition-all duration-300"></div>
-                <div className="relative bg-slate-900 rounded-lg sm:rounded-xl p-4 sm:p-6 md:p-8 border border-emerald-500/20 shadow-sm hover:shadow-md sm:hover:shadow-xl hover:border-emerald-300 transition-all duration-300 h-full">
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-cyan-500 rounded-xl sm:rounded-2xl opacity-0 group-hover:opacity-10 blur transition-all duration-300"></div>
+                <div className="relative bg-slate-900 rounded-lg sm:rounded-xl p-4 sm:p-6 md:p-8 border border-purple-500/20 shadow-sm hover:shadow-md sm:hover:shadow-xl hover:border-purple-300 transition-all duration-300 h-full">
                   <div className="flex justify-between items-start mb-4 sm:mb-6">
-                    <div className={`p-2 sm:p-3 bg-gradient-to-br ${index === 0 ? 'from-emerald-500 to-cyan-400' : index === 1 ? 'from-green-500 to-purple-400' : index === 2 ? 'from-rose-500 to-pink-400' : 'from-violet-500 to-purple-400'} rounded-lg`}>
+                    <div className={`p-2 sm:p-3 bg-gradient-to-br ${index === 0 ? 'from-purple-500 to-cyan-400' : index === 1 ? 'from-cyan-500 to-purple-400' : index === 2 ? 'from-rose-500 to-pink-400' : 'from-violet-500 to-purple-400'} rounded-lg`}>
                       <div className="text-white">{stat.icon}</div>
                     </div>
-                    <span className="text-xs sm:text-sm font-semibold px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-full bg-green-50 text-green-600">
+                    <span className="text-xs sm:text-sm font-semibold px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-full bg-purple-500/15 text-cyan-300">
                       {stat.change}
                     </span>
                   </div>
-                  <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-emerald-100 mb-1 sm:mb-2">
+                  <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-100 mb-1 sm:mb-2">
                     <AnimatedStatValue value={stat.value} />
                   </div>
-                  <div className="text-sm sm:text-base text-emerald-100/80 font-medium">{stat.label}</div>
-                  <div className="mt-2 sm:mt-4 h-0.5 sm:h-1 w-8 sm:w-12 bg-gradient-to-r from-emerald-500 to-emerald-500 rounded-full"></div>
+                  <div className="text-sm sm:text-base text-slate-100/80 font-medium">{stat.label}</div>
+                  <div className="mt-2 sm:mt-4 h-0.5 sm:h-1 w-8 sm:w-12 bg-gradient-to-r from-purple-600 to-cyan-500 rounded-full"></div>
                 </div>
               </motion.div>
             ))}
@@ -376,15 +376,15 @@ const HomePage = () => {
                 whileHover={{ y: -4 }}
                 className="relative group"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-emerald-500 to-emerald-500 rounded-xl sm:rounded-2xl opacity-0 group-hover:opacity-5 blur transition-all duration-300"></div>
-                <div className="relative bg-slate-900 rounded-lg sm:rounded-xl p-5 sm:p-6 border border-emerald-500/20 shadow-sm hover:shadow-md sm:hover:shadow-xl hover:border-emerald-300 transition-all duration-300 h-full">
+                <div className="absolute inset-0 bg-gradient-to-br from-purple-600 to-cyan-500 rounded-xl sm:rounded-2xl opacity-0 group-hover:opacity-5 blur transition-all duration-300"></div>
+                <div className="relative bg-slate-900 rounded-lg sm:rounded-xl p-5 sm:p-6 border border-purple-500/20 shadow-sm hover:shadow-md sm:hover:shadow-xl hover:border-purple-300 transition-all duration-300 h-full">
                   <div className="flex flex-col h-full">
                     <div className={`p-3 sm:p-4 bg-gradient-to-br ${item.gradient} rounded-lg sm:rounded-xl w-fit mb-4 sm:mb-6 shadow-md sm:shadow-lg`}>
                       <div className="text-white">{item.icon}</div>
                     </div>
-                    <h3 className="text-lg sm:text-xl font-bold text-emerald-100 mb-3 sm:mb-4">{item.title}</h3>
-                    <p className="text-sm sm:text-base text-emerald-100/80 mb-4 sm:mb-6 flex-grow">{item.description}</p>
-                    <div className="flex items-center text-emerald-600 font-medium group-hover:text-emerald-700 transition-colors text-sm sm:text-base">
+                    <h3 className="text-lg sm:text-xl font-bold text-slate-100 mb-3 sm:mb-4">{item.title}</h3>
+                    <p className="text-sm sm:text-base text-slate-100/80 mb-4 sm:mb-6 flex-grow">{item.description}</p>
+                    <div className="flex items-center text-purple-400 font-medium group-hover:text-purple-300 transition-colors text-sm sm:text-base">
                       <span>Learn more</span>
                       <ChevronRight className="h-3 w-3 sm:h-4 sm:w-4 ml-1 group-hover:translate-x-1 transition-transform" />
                     </div>
@@ -398,8 +398,8 @@ const HomePage = () => {
 
       {/* Hiring Process - Enhanced */}
       <section className="relative py-16 sm:py-20 md:py-24 bg-gradient-to-br from-slate-950 to-slate-900 overflow-hidden">
-        <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-to-bl from-emerald-500/10 to-green-500/5 rounded-full -translate-y-1/2 translate-x-1/3"></div>
-        <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-gradient-to-tr from-green-500/10 to-emerald-500/5 rounded-full translate-y-1/2 -translate-x-1/3"></div>
+        <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-to-bl from-purple-500/10 to-cyan-500/10 rounded-full -translate-y-1/2 translate-x-1/3"></div>
+        <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-gradient-to-tr from-cyan-500/10 to-purple-500/10 rounded-full translate-y-1/2 -translate-x-1/3"></div>
         
         <div className="relative px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
           <div className="text-center mb-12 sm:mb-16 md:mb-20">
@@ -407,31 +407,31 @@ const HomePage = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
-              className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-gradient-to-r from-emerald-500/15 to-green-500/10 border border-emerald-500/30 mb-4 sm:mb-6"
+              className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-gradient-to-r from-purple-500/15 to-cyan-500/10 border border-purple-500/30 mb-4 sm:mb-6"
             >
-              <Zap className="h-3 w-3 sm:h-4 sm:w-4 text-emerald-600" />
-              <span className="text-xs sm:text-sm font-semibold text-emerald-200">Fast & Efficient</span>
+              <Zap className="h-3 w-3 sm:h-4 sm:w-4 text-purple-400" />
+              <span className="text-xs sm:text-sm font-semibold text-cyan-200">Fast & Efficient</span>
             </motion.div>
             
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-emerald-100 mb-4 sm:mb-6">
-              Streamlined <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-emerald-600">Hiring Journey</span>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-slate-100 mb-4 sm:mb-6">
+              Streamlined <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-cyan-500">Hiring Journey</span>
             </h2>
-            <p className="text-base sm:text-lg md:text-xl text-emerald-100/80 max-w-2xl mx-auto px-4 leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl text-slate-100/80 max-w-2xl mx-auto px-4 leading-relaxed">
               Experience a transparent and efficient process designed to respect your time
             </p>
           </div>
 
           <div className="relative">
             {/* Enhanced Timeline - Desktop Only */}
-            <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-1.5 sm:h-2 bg-gradient-to-r from-emerald-500/30 via-green-500/20 to-emerald-500/30 transform -translate-y-1/2 rounded-full overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-emerald-500 opacity-20"></div>
+            <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-1.5 sm:h-2 bg-gradient-to-r from-purple-500/30 via-cyan-500/20 to-pink-500/30 transform -translate-y-1/2 rounded-full overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-cyan-500 opacity-20"></div>
             </div>
             
             {/* Timeline dots - Desktop Only */}
             {hiringProcess.map((_, index) => (
               <div key={index} className="hidden lg:block absolute top-1/2 left-0 transform -translate-y-1/2" 
                 style={{ left: `${(index + 0.5) * (100 / hiringProcess.length)}%` }}>
-                <div className="w-3 h-3 sm:w-4 sm:h-4 bg-gradient-to-r from-emerald-500 to-green-500 rounded-full border-4 border-slate-950 shadow-lg"></div>
+                <div className="w-3 h-3 sm:w-4 sm:h-4 bg-gradient-to-r from-purple-600 to-cyan-500 rounded-full border-4 border-slate-950 shadow-lg"></div>
               </div>
             ))}
             
@@ -445,24 +445,24 @@ const HomePage = () => {
                   transition={{ duration: 0.4, delay: index * 0.1 }}
                   className="relative"
                 >
-                  <div className="group relative bg-slate-900 rounded-lg sm:rounded-xl p-6 sm:p-8 border border-emerald-500/20 shadow-sm hover:shadow-md sm:hover:shadow-xl hover:border-emerald-400 transition-all duration-300 h-full">
+                  <div className="group relative bg-slate-900 rounded-lg sm:rounded-xl p-6 sm:p-8 border border-purple-500/20 shadow-sm hover:shadow-md sm:hover:shadow-xl hover:border-purple-400 transition-all duration-300 h-full">
                     {/* Step number */}
-                    <div className="absolute -top-3 sm:-top-4 left-1/2 transform -translate-x-1/2 w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-gradient-to-r from-emerald-600 to-emerald-600 rounded-full flex items-center justify-center text-white font-bold text-sm sm:text-base md:text-lg shadow-lg">
+                    <div className="absolute -top-3 sm:-top-4 left-1/2 transform -translate-x-1/2 w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-gradient-to-r from-purple-600 to-cyan-500 rounded-full flex items-center justify-center text-white font-bold text-sm sm:text-base md:text-lg shadow-lg">
                       {step.step}
                     </div>
                     
                     <div className="pt-4 sm:pt-4">
-                      <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 mx-auto mb-4 sm:mb-6 bg-gradient-to-br from-emerald-500/15 to-green-500/15 rounded-lg sm:rounded-xl flex items-center justify-center group-hover:scale-105 sm:group-hover:scale-110 transition-transform duration-300">
-                        <div className="text-emerald-300 group-hover:text-emerald-200 transition-colors h-5 w-5 sm:h-6 sm:w-6">{step.icon}</div>
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 mx-auto mb-4 sm:mb-6 bg-gradient-to-br from-purple-500/15 to-cyan-500/15 rounded-lg sm:rounded-xl flex items-center justify-center group-hover:scale-105 sm:group-hover:scale-110 transition-transform duration-300">
+                        <div className="text-cyan-300 group-hover:text-cyan-200 transition-colors h-5 w-5 sm:h-6 sm:w-6">{step.icon}</div>
                       </div>
                       
                       <div className="text-center">
-                        <h3 className="text-base sm:text-lg font-bold text-emerald-100 mb-2 sm:mb-3">{step.title}</h3>
-                        <p className="text-sm text-emerald-100/80 mb-3 sm:mb-4 leading-relaxed">{step.description}</p>
+                        <h3 className="text-base sm:text-lg font-bold text-slate-100 mb-2 sm:mb-3">{step.title}</h3>
+                        <p className="text-sm text-slate-100/80 mb-3 sm:mb-4 leading-relaxed">{step.description}</p>
                         
-                        <div className="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3 py-1.5 sm:px-4 sm:py-2 bg-gradient-to-r from-emerald-500/15 to-green-500/10 rounded-full">
-                          <Clock className="h-3 w-3 sm:h-4 sm:w-4 text-emerald-600" />
-                          <span className="text-xs sm:text-sm font-medium text-emerald-200">{step.time}</span>
+                        <div className="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3 py-1.5 sm:px-4 sm:py-2 bg-gradient-to-r from-purple-500/15 to-cyan-500/10 rounded-full">
+                          <Clock className="h-3 w-3 sm:h-4 sm:w-4 text-purple-400" />
+                          <span className="text-xs sm:text-sm font-medium text-cyan-200">{step.time}</span>
                         </div>
                       </div>
                     </div>
@@ -480,15 +480,15 @@ const HomePage = () => {
             className="mt-12 sm:mt-16 md:mt-20 text-center"
           >
             <div className="inline-flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
-              <Shield className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-green-500" />
-              <span className="text-sm sm:text-base md:text-lg font-semibold text-green-600">All applications reviewed within 48 hours</span>
+              <Shield className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-cyan-400" />
+              <span className="text-sm sm:text-base md:text-lg font-semibold text-cyan-300">All applications reviewed within 48 hours</span>
             </div>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="w-full sm:w-auto">
                 <Link 
                   to="/apply" 
-                  className="inline-flex items-center justify-center w-full sm:w-auto px-6 py-3.5 sm:px-8 sm:py-4 md:px-10 md:py-5 text-sm sm:text-base md:text-lg font-semibold text-white bg-gradient-to-r from-emerald-600 to-emerald-600 rounded-lg sm:rounded-xl hover:from-emerald-700 hover:to-emerald-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-emerald-500/25"
+                  className="inline-flex items-center justify-center w-full sm:w-auto px-6 py-3.5 sm:px-8 sm:py-4 md:px-10 md:py-5 text-sm sm:text-base md:text-lg font-semibold text-white bg-gradient-to-r from-purple-600 to-cyan-500 rounded-lg sm:rounded-xl hover:from-purple-700 hover:to-cyan-600 transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-purple-500/30"
                 >
                   Start Your Application
                   <Sparkles className="ml-2 sm:ml-3 h-4 w-4 sm:h-5 sm:w-5" />
@@ -508,20 +508,20 @@ const HomePage = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-80px" }}
             >
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/30 mb-5">
-                <MessageSquare className="h-4 w-4 text-emerald-300" />
-                <span className="text-sm font-semibold text-emerald-200">New: AI Careers Assistant</span>
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/10 border border-purple-500/30 mb-5">
+                <MessageSquare className="h-4 w-4 text-cyan-300" />
+                <span className="text-sm font-semibold text-cyan-200">New: AI Careers Assistant</span>
               </div>
-              <h2 className="text-3xl sm:text-4xl font-bold text-emerald-100 mb-4">
+              <h2 className="text-3xl sm:text-4xl font-bold text-slate-100 mb-4">
                 Need help choosing the right role?
               </h2>
-              <p className="text-emerald-100/80 text-base sm:text-lg leading-relaxed mb-6">
+              <p className="text-slate-100/80 text-base sm:text-lg leading-relaxed mb-6">
                 Use our chatbot to discover roles by skills, understand the hiring flow, and get guidance before you apply.
               </p>
               <div className="flex flex-wrap gap-3">
-                <span className="px-3 py-1.5 rounded-full text-sm bg-emerald-500/10 text-emerald-200 border border-emerald-500/20">Role Suggestions</span>
-                <span className="px-3 py-1.5 rounded-full text-sm bg-emerald-500/10 text-emerald-200 border border-emerald-500/20">Application Help</span>
-                <span className="px-3 py-1.5 rounded-full text-sm bg-emerald-500/10 text-emerald-200 border border-emerald-500/20">Hiring Timeline</span>
+                <span className="px-3 py-1.5 rounded-full text-sm bg-purple-500/10 text-cyan-200 border border-purple-500/20">Role Suggestions</span>
+                <span className="px-3 py-1.5 rounded-full text-sm bg-purple-500/10 text-cyan-200 border border-purple-500/20">Application Help</span>
+                <span className="px-3 py-1.5 rounded-full text-sm bg-purple-500/10 text-cyan-200 border border-purple-500/20">Hiring Timeline</span>
               </div>
             </motion.div>
 
@@ -531,22 +531,22 @@ const HomePage = () => {
               viewport={{ once: true, margin: "-80px" }}
               className="card p-5 sm:p-6"
             >
-              <div className="rounded-xl border border-emerald-500/20 bg-slate-950/70 p-4 space-y-3">
-                <div className="text-sm text-emerald-100/70">Sample chat preview</div>
-                <div className="ml-auto max-w-[85%] bg-emerald-600 text-white px-3 py-2 rounded-xl text-sm">
+              <div className="rounded-xl border border-purple-500/20 bg-slate-950/70 p-4 space-y-3">
+                <div className="text-sm text-slate-100/70">Sample chat preview</div>
+                <div className="ml-auto max-w-[85%] bg-gradient-to-r from-purple-600 to-cyan-500 text-white px-3 py-2 rounded-xl text-sm">
                   I know React, Node.js, and MongoDB. Which role fits me?
                 </div>
-                <div className="max-w-[90%] bg-slate-800 border border-emerald-500/20 text-emerald-100 px-3 py-2 rounded-xl text-sm">
+                <div className="max-w-[90%] bg-slate-800 border border-purple-500/20 text-slate-100 px-3 py-2 rounded-xl text-sm">
                   Great profile! You can explore Full-Stack Developer and Backend Developer roles. Want me to shortlist open positions?
                 </div>
                 <div className="flex flex-wrap gap-2 pt-2">
-                  <button className="px-3 py-1.5 rounded-lg text-xs bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-200">
+                  <button className="px-3 py-1.5 rounded-lg text-xs bg-purple-500/15 hover:bg-purple-500/25 text-cyan-200">
                     Show matching roles
                   </button>
-                  <button className="px-3 py-1.5 rounded-lg text-xs bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-200">
+                  <button className="px-3 py-1.5 rounded-lg text-xs bg-purple-500/15 hover:bg-purple-500/25 text-cyan-200">
                     Explain hiring steps
                   </button>
-                  <button className="px-3 py-1.5 rounded-lg text-xs bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-200">
+                  <button className="px-3 py-1.5 rounded-lg text-xs bg-purple-500/15 hover:bg-purple-500/25 text-cyan-200">
                     Help me apply
                   </button>
                 </div>
@@ -569,16 +569,16 @@ const HomePage = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
-              className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-gradient-to-r from-emerald-50 to-emerald-50 border border-emerald-100 mb-4 sm:mb-6"
+              className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-gradient-to-r from-purple-500/10 to-cyan-500/10 border border-purple-300/30 mb-4 sm:mb-6"
             >
-              <Star className="h-3 w-3 sm:h-4 sm:w-4 text-emerald-600" />
-              <span className="text-xs sm:text-sm font-semibold text-emerald-700">Team Stories</span>
+              <Star className="h-3 w-3 sm:h-4 sm:w-4 text-purple-400" />
+              <span className="text-xs sm:text-sm font-semibold text-purple-300">Team Stories</span>
             </motion.div>
             
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-emerald-100 mb-4 sm:mb-6">
-              Valued <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-emerald-600">Voices</span> From Our Team
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-slate-100 mb-4 sm:mb-6">
+              Valued <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-cyan-500">Voices</span> From Our Team
             </h2>
-            <p className="text-base sm:text-lg md:text-xl text-emerald-100/80 max-w-2xl mx-auto px-4 leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl text-slate-100/80 max-w-2xl mx-auto px-4 leading-relaxed">
               Discover what makes Aparaitech an exceptional place to grow and thrive
             </p>
           </div>
@@ -594,8 +594,8 @@ const HomePage = () => {
                 whileHover={{ y: -4 }}
                 className="relative group"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-emerald-500 to-emerald-500 rounded-xl sm:rounded-2xl opacity-0 group-hover:opacity-5 blur transition-all duration-300"></div>
-                <div className="relative bg-slate-900 rounded-lg sm:rounded-xl p-5 sm:p-6 border border-emerald-500/20 shadow-sm hover:shadow-md sm:hover:shadow-xl hover:border-emerald-300 transition-all duration-300 h-full">
+                <div className="absolute inset-0 bg-gradient-to-br from-purple-600 to-cyan-500 rounded-xl sm:rounded-2xl opacity-0 group-hover:opacity-5 blur transition-all duration-300"></div>
+                <div className="relative bg-slate-900 rounded-lg sm:rounded-xl p-5 sm:p-6 border border-purple-500/20 shadow-sm hover:shadow-md sm:hover:shadow-xl hover:border-purple-300 transition-all duration-300 h-full">
                   {/* Rating stars */}
                   <div className="flex gap-0.5 sm:gap-1 mb-4 sm:mb-6">
                     {[...Array(testimonial.rating)].map((_, i) => (
@@ -604,7 +604,7 @@ const HomePage = () => {
                   </div>
                   
                   <p className="text-sm sm:text-base md:text-lg text-slate-700 mb-6 sm:mb-8 leading-relaxed relative">
-                    <span className="absolute -top-3 sm:-top-4 -left-3 sm:-left-4 text-4xl sm:text-5xl md:text-6xl text-emerald-100 font-serif">"</span>
+                    <span className="absolute -top-3 sm:-top-4 -left-3 sm:-left-4 text-4xl sm:text-5xl md:text-6xl text-slate-100 font-serif">"</span>
                     {testimonial.quote}
                   </p>
                   
@@ -613,11 +613,11 @@ const HomePage = () => {
                       {testimonial.avatar}
                     </div>
                     <div>
-                      <h4 className="font-bold text-emerald-100 text-base sm:text-lg md:text-xl">{testimonial.name}</h4>
-                      <p className="text-emerald-600 font-medium text-sm sm:text-base">{testimonial.role}</p>
+                      <h4 className="font-bold text-slate-100 text-base sm:text-lg md:text-xl">{testimonial.name}</h4>
+                      <p className="text-purple-400 font-medium text-sm sm:text-base">{testimonial.role}</p>
                       <div className="flex items-center gap-1.5 sm:gap-2 mt-1 sm:mt-2">
-                        <CheckCircle className="h-3 w-3 sm:h-4 sm:w-4 text-green-500" />
-                        <span className="text-xs sm:text-sm text-emerald-200/60">Current Team Member</span>
+                        <CheckCircle className="h-3 w-3 sm:h-4 sm:w-4 text-cyan-400" />
+                        <span className="text-xs sm:text-sm text-cyan-200/60">Current Team Member</span>
                       </div>
                     </div>
                   </div>
@@ -633,11 +633,11 @@ const HomePage = () => {
             viewport={{ once: true, margin: "-100px" }}
             className="mt-12 sm:mt-16 md:mt-20 text-center"
           >
-            <div className="max-w-2xl mx-auto bg-gradient-to-r from-emerald-50 via-slate-900 to-emerald-50 rounded-lg sm:rounded-xl md:rounded-2xl p-6 sm:p-8 md:p-12 border border-emerald-100 shadow-md sm:shadow-lg">
-              <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-emerald-100 mb-4 sm:mb-6">
+            <div className="max-w-2xl mx-auto bg-gradient-to-r from-purple-500/10 via-slate-900 to-cyan-500/10 rounded-lg sm:rounded-xl md:rounded-2xl p-6 sm:p-8 md:p-12 border border-purple-300/30 shadow-md sm:shadow-lg">
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-slate-100 mb-4 sm:mb-6">
                 Ready to Build What's Next?
               </h3>
-              <p className="text-base sm:text-lg md:text-xl text-emerald-100/80 mb-6 sm:mb-8 max-w-lg mx-auto">
+              <p className="text-base sm:text-lg md:text-xl text-slate-100/80 mb-6 sm:mb-8 max-w-lg mx-auto">
                 Join us in creating the future of enterprise technology
               </p>
               
@@ -645,7 +645,7 @@ const HomePage = () => {
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="w-full sm:w-auto">
                   <Link 
                     to="/apply" 
-                    className="group inline-flex items-center justify-center w-full sm:w-auto px-6 py-3.5 sm:px-8 sm:py-4 md:px-10 md:py-5 text-sm sm:text-base md:text-lg font-semibold text-white bg-gradient-to-r from-emerald-600 to-emerald-600 rounded-lg sm:rounded-xl hover:from-emerald-700 hover:to-emerald-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-emerald-500/25"
+                    className="group inline-flex items-center justify-center w-full sm:w-auto px-6 py-3.5 sm:px-8 sm:py-4 md:px-10 md:py-5 text-sm sm:text-base md:text-lg font-semibold text-white bg-gradient-to-r from-purple-600 to-cyan-500 rounded-lg sm:rounded-xl hover:from-purple-700 hover:to-cyan-600 transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-purple-500/30"
                   >
                     <span>Start Your Journey</span>
                     <Rocket className="ml-2 sm:ml-3 h-4 w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 transition-transform" />
@@ -655,7 +655,7 @@ const HomePage = () => {
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="w-full sm:w-auto">
                   <Link 
                     to="/contact" 
-                    className="inline-flex items-center justify-center w-full sm:w-auto px-6 py-3.5 sm:px-8 sm:py-4 md:px-10 md:py-5 text-sm sm:text-base md:text-lg font-semibold text-emerald-100 bg-slate-900 border border-slate-300 rounded-lg sm:rounded-xl hover:border-emerald-300 hover:shadow-md sm:hover:shadow-lg transition-all duration-300"
+                    className="inline-flex items-center justify-center w-full sm:w-auto px-6 py-3.5 sm:px-8 sm:py-4 md:px-10 md:py-5 text-sm sm:text-base md:text-lg font-semibold text-slate-100 bg-slate-900 border border-slate-300 rounded-lg sm:rounded-xl hover:border-purple-300 hover:shadow-md sm:hover:shadow-lg transition-all duration-300"
                   >
                     <span>Talk to Recruiter</span>
                     <MessageSquare className="ml-2 sm:ml-3 h-4 w-4 sm:h-5 sm:w-5" />

@@ -14,7 +14,7 @@
   }
 
   .btn-secondary {
-    @apply bg-slate-900 border border-emerald-500/30 hover:border-emerald-400 text-emerald-100 font-semibold py-3 px-6 rounded-lg transition-all duration-200 hover:shadow-md active:translate-y-0 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:ring-offset-slate-950;
+    @apply bg-slate-900 border border-purple-500/30 hover:border-cyan-400 text-slate-100 font-semibold py-3 px-6 rounded-lg transition-all duration-200 hover:shadow-md active:translate-y-0 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-slate-950;
   }
 
   .card {
@@ -22,7 +22,7 @@
   }
 
   .input-field {
-    @apply w-full px-4 py-3 border border-emerald-500/30 rounded-lg bg-slate-900 text-emerald-50 placeholder-emerald-200/50 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all;
+    @apply w-full px-4 py-3 border border-purple-500/30 rounded-lg bg-slate-900 text-slate-100 placeholder-slate-300/50 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 outline-none transition-all;
   }
 
   .section-padding {
