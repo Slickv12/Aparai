@@ -104,7 +104,7 @@ const OpenPositionsPage = () => {
           title="Open Positions"
           subtitle="Find your perfect role and join our team of innovators"
         >
-          <div className="flex items-center space-x-2 text-gray-600 mt-4">
+          <div className="flex items-center space-x-2 text-emerald-100/80 mt-4">
             <Briefcase className="h-5 w-5" />
             <span>
               {jobCount} open position{jobCount !== 1 ? "s" : ""}
@@ -135,12 +135,12 @@ const OpenPositionsPage = () => {
         ) : (
           <div className="text-center py-16">
             <div className="bg-gradient-to-r from-blue-100 to-indigo-100 w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6">
-              <Briefcase className="h-12 w-12 text-blue-600" />
+              <Briefcase className="h-12 w-12 text-emerald-300" />
             </div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-3">
+            <h3 className="text-2xl font-bold text-emerald-100 mb-3">
               No positions match your filters
             </h3>
-            <p className="text-gray-600 mb-8">
+            <p className="text-emerald-100/80 mb-8">
               Try adjusting your search criteria or check back later for new openings.
             </p>
             <button
@@ -159,12 +159,12 @@ const OpenPositionsPage = () => {
           </div>
         )}
 
-        <div className="mt-12 pt-8 border-t border-gray-200 text-center">
-          <p className="text-gray-600">
+        <div className="mt-12 pt-8 border-t border-emerald-500/20 text-center">
+          <p className="text-emerald-100/80">
             Don't see the perfect role?{" "}
             <a
               href="mailto:careers@aparaitech.com"
-              className="text-blue-600 hover:text-blue-800 font-medium"
+              className="text-emerald-300 hover:text-emerald-200 font-medium"
             >
               Send us your resume
             </a>{" "}

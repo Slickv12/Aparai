@@ -34,7 +34,7 @@ const FilterBar = ({ onFilterChange }) => {
         {/* Search Input */}
         <div className="flex-1">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-emerald-200/60 h-5 w-5" />
             <input
               type="text"
               placeholder="Search by role, technology, or keyword..."
@@ -90,18 +90,18 @@ const FilterBar = ({ onFilterChange }) => {
 
       {/* Active Filters Display */}
       {hasActiveFilters && (
-        <div className="flex flex-wrap gap-2 mt-4 pt-4 border-t border-gray-100">
+        <div className="flex flex-wrap gap-2 mt-4 pt-4 border-t border-emerald-500/20">
           {Object.entries(filters).map(([key, value]) => {
             if (!value) return null;
             return (
               <span
                 key={key}
-                className="px-3 py-1 bg-blue-50 text-blue-700 text-sm rounded-full flex items-center space-x-2"
+                className="px-3 py-1 bg-emerald-500/10 text-emerald-200 text-sm rounded-full flex items-center space-x-2"
               >
                 <span className="capitalize">{key}: {value}</span>
                 <button
                   onClick={() => handleChange(key, '')}
-                  className="hover:text-blue-900"
+                  className="hover:text-emerald-100"
                 >
                   <X className="h-3 w-3" />
                 </button>

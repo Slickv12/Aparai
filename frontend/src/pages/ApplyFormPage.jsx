@@ -215,14 +215,14 @@ const ApplyFormPage = () => {
               <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
                 <CheckCircle className="h-10 w-10 text-green-600" />
               </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-3">
+              <h3 className="text-2xl font-bold text-emerald-100 mb-3">
                 ✅ Application Submitted Successfully!
               </h3>
-              <p className="text-gray-600 mb-6">
+              <p className="text-emerald-100/80 mb-6">
                 Thank you for applying to Aparaitech. Our hiring team will review
                 your application and contact you within 5-7 business days.
               </p>
-              <div className="bg-blue-50 p-4 rounded-lg">
+              <div className="bg-emerald-500/10 p-4 rounded-lg">
                 <p className="text-blue-800">
                   <strong>Next steps:</strong> Check your email for a
                   confirmation and next steps.
@@ -249,7 +249,7 @@ const ApplyFormPage = () => {
                 {/* Personal Information */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-emerald-100/90 mb-2">
                       <div className="flex items-center space-x-2">
                         <User className="h-4 w-4" />
                         <span>Full Name *</span>
@@ -275,7 +275,7 @@ const ApplyFormPage = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-emerald-100/90 mb-2">
                       <div className="flex items-center space-x-2">
                         <Mail className="h-4 w-4" />
                         <span>Email Address *</span>
@@ -301,7 +301,7 @@ const ApplyFormPage = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-emerald-100/90 mb-2">
                       <div className="flex items-center space-x-2">
                         <Phone className="h-4 w-4" />
                         <span>Phone Number *</span>
@@ -327,7 +327,7 @@ const ApplyFormPage = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-emerald-100/90 mb-2">
                       <div className="flex items-center space-x-2">
                         <MapPin className="h-4 w-4" />
                         <span>Location *</span>
@@ -356,7 +356,7 @@ const ApplyFormPage = () => {
                 {/* Professional Information */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-emerald-100/90 mb-2">
                       <div className="flex items-center space-x-2">
                         <Briefcase className="h-4 w-4" />
                         <span>Role Applying For *</span>
@@ -392,7 +392,7 @@ const ApplyFormPage = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-emerald-100/90 mb-2">
                       <div className="flex items-center space-x-2">
                         <Award className="h-4 w-4" />
                         <span>Experience Level *</span>
@@ -425,7 +425,7 @@ const ApplyFormPage = () => {
 
                 {/* Skills */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-emerald-100/90 mb-2">
                     <div className="flex items-center space-x-2">
                       <Code className="h-4 w-4" />
                       <span>Skills & Technologies *</span>
@@ -451,7 +451,7 @@ const ApplyFormPage = () => {
                 {/* Social Links */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-emerald-100/90 mb-2">
                       <div className="flex items-center space-x-2">
                         <Linkedin className="h-4 w-4" />
                         <span>LinkedIn Profile (Optional)</span>
@@ -468,7 +468,7 @@ const ApplyFormPage = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-emerald-100/90 mb-2">
                       <div className="flex items-center space-x-2">
                         <Github className="h-4 w-4" />
                         <span>GitHub Profile (Optional)</span>
@@ -487,18 +487,18 @@ const ApplyFormPage = () => {
 
                 {/* Resume Upload */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-emerald-100/90 mb-2">
                     <div className="flex items-center space-x-2">
                       <FileText className="h-4 w-4" />
                       <span>Resume (PDF only) *</span>
                     </div>
                   </label>
                   <div className="mt-1">
-                    <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+                    <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-emerald-500/10">
                       <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                        <Upload className="h-8 w-8 text-gray-400 mb-2" />
+                        <Upload className="h-8 w-8 text-emerald-200/60 mb-2" />
                         {formData.resume ? (
-                          <p className="text-sm text-gray-900 font-medium">
+                          <p className="text-sm text-emerald-100 font-medium">
                             {formData.resume.name}
                           </p>
                         ) : (
@@ -532,7 +532,7 @@ const ApplyFormPage = () => {
                 </div>
 
                 {/* Submit Button */}
-                <div className="pt-6 border-t border-gray-200">
+                <div className="pt-6 border-t border-emerald-500/20">
                   <button
                     type="submit"
                     disabled={isSubmitting}
@@ -550,7 +550,7 @@ const ApplyFormPage = () => {
 
                   <p className="text-sm text-gray-500 text-center mt-4">
                     By submitting this application, you agree to our{" "}
-                    <a href="#" className="text-blue-600 hover:text-blue-800">
+                    <a href="#" className="text-emerald-300 hover:text-emerald-200">
                       Privacy Policy
                     </a>
                     . We'll contact you via email regarding your application.
