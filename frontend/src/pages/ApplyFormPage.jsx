@@ -21,6 +21,13 @@ import {
 } from "lucide-react";
 
 const ApplyFormPage = () => {
+  const skillKeywords = {
+    frontend: ["react", "javascript", "html", "css", "tailwind", "redux", "next.js"],
+    backend: ["node", "express", "mongodb", "sql", "postgres", "rest api", "jwt"],
+    data: ["python", "pandas", "machine learning", "numpy", "power bi", "tableau"],
+    devops: ["docker", "kubernetes", "aws", "ci/cd", "terraform"],
+  };
+
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const defaultRole = queryParams.get("role") || "";
@@ -50,6 +57,100 @@ const ApplyFormPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState("");
+  const [resumeFile, setResumeFile] = useState(null);
+  const [resumeText, setResumeText] = useState("");
+  const [detectedSkills, setDetectedSkills] = useState([]);
+  const [suggestedRoles, setSuggestedRoles] = useState([]);
+  const [analysisLoading, setAnalysisLoading] = useState(false);
+  const [analysisError, setAnalysisError] = useState("");
+
+  const detectSkills = (text) => {
+    const lowerText = text.toLowerCase();
+    const found = [];
+
+    Object.entries(skillKeywords).forEach(([category, keywords]) => {
+      keywords.forEach((keyword) => {
+        if (lowerText.includes(keyword.toLowerCase())) {
+          found.push({ category, skill: keyword });
+        }
+      });
+    });
+
+    return Array.from(new Set(found.map((item) => `${item.category}:${item.skill}`))).map((item) => {
+      const [category, skill] = item.split(":");
+      return { category, skill };
+    });
+  };
+
+  const suggestRoles = (skills) => {
+    const categories = new Set(skills.map((s) => s.category));
+    const roles = [];
+
+    if (categories.has("frontend")) roles.push("Frontend Developer");
+    if (categories.has("backend")) roles.push("Backend Developer");
+    if (categories.has("frontend") && categories.has("backend")) roles.push("Full Stack Developer");
+    if (categories.has("data")) roles.push("Data Analyst");
+    if (categories.has("devops")) roles.push("DevOps Engineer");
+
+    if (!roles.length) roles.push("Software Engineer (General)");
+    return Array.from(new Set(roles));
+  };
+
+  const extractResumeText = async (file) => {
+    let pdfjsLib;
+    try {
+      const localPdfJsPath = "pdfjs-dist/build/pdf.mjs";
+      pdfjsLib = await import(/* @vite-ignore */ localPdfJsPath);
+    } catch (error) {
+      pdfjsLib = await import(
+        /* @vite-ignore */ "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.10.38/build/pdf.min.mjs"
+      );
+    }
+
+    const workerSrc = "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.10.38/build/pdf.worker.min.mjs";
+    pdfjsLib.GlobalWorkerOptions.workerSrc = workerSrc;
+
+    const buffer = await file.arrayBuffer();
+    const pdf = await pdfjsLib.getDocument({ data: buffer }).promise;
+    const pages = [];
+
+    for (let pageNum = 1; pageNum <= pdf.numPages; pageNum += 1) {
+      const page = await pdf.getPage(pageNum);
+      const textContent = await page.getTextContent();
+      const pageText = textContent.items.map((item) => item.str).join(" ");
+      pages.push(pageText);
+    }
+
+    return pages.join(" ").toLowerCase();
+  };
+
+  const analyzeResume = async (file) => {
+    setAnalysisError("");
+    setDetectedSkills([]);
+    setSuggestedRoles([]);
+    setResumeText("");
+
+    if (!file) return;
+    if (file.type !== "application/pdf") {
+      setAnalysisError("Resume analysis supports PDF files only.");
+      return;
+    }
+
+    try {
+      setAnalysisLoading(true);
+      const extractedText = await extractResumeText(file);
+      const skills = detectSkills(extractedText);
+      const roles = suggestRoles(skills);
+
+      setResumeText(extractedText);
+      setDetectedSkills(skills);
+      setSuggestedRoles(roles);
+    } catch (error) {
+      setAnalysisError("Unable to parse this PDF. Please try another resume file.");
+    } finally {
+      setAnalysisLoading(false);
+    }
+  };
 
   // ✅ Fetch jobs from backend to generate roles list
   useEffect(() => {
@@ -113,7 +214,10 @@ const ApplyFormPage = () => {
     const { name, value, files } = e.target;
 
     if (name === "resume") {
-      setFormData((prev) => ({ ...prev, resume: files[0] }));
+      const file = files?.[0] || null;
+      setResumeFile(file);
+      setFormData((prev) => ({ ...prev, resume: file }));
+      analyzeResume(file);
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
     }
@@ -528,7 +632,59 @@ const ApplyFormPage = () => {
                         {errors.resume}
                       </p>
                     )}
+                    {analysisError && (
+                      <p className="mt-2 text-sm text-red-500">{analysisError}</p>
+                    )}
                   </div>
+                </div>
+
+                {/* Resume Analysis */}
+                <div className="card p-5">
+                  <h4 className="text-lg font-semibold text-emerald-100 mb-3">Resume Analysis</h4>
+
+                  {analysisLoading ? (
+                    <div className="flex items-center gap-2 text-emerald-200">
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                      <span className="text-sm">Analyzing your resume...</span>
+                    </div>
+                  ) : resumeFile ? (
+                    <motion.div
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="space-y-4"
+                    >
+                      <div>
+                        <p className="text-sm text-emerald-200 mb-2">Detected Skills:</p>
+                        {detectedSkills.length ? (
+                          <div className="flex flex-wrap gap-2">
+                            {detectedSkills.map((item, idx) => (
+                              <span
+                                key={`${item.skill}-${idx}`}
+                                className="px-2.5 py-1 rounded-full text-xs bg-emerald-500/15 border border-emerald-500/30 text-emerald-100"
+                              >
+                                {item.skill}
+                              </span>
+                            ))}
+                          </div>
+                        ) : (
+                          <p className="text-sm text-emerald-100/70">No known skills detected yet.</p>
+                        )}
+                      </div>
+
+                      <div>
+                        <p className="text-sm text-emerald-200 mb-2">Suggested Roles:</p>
+                        <ul className="list-disc list-inside text-sm text-emerald-100/90 space-y-1">
+                          {suggestedRoles.map((role) => (
+                            <li key={role}>{role}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    </motion.div>
+                  ) : (
+                    <p className="text-sm text-emerald-100/70">
+                      Upload your resume to detect technical skills and get role suggestions.
+                    </p>
+                  )}
                 </div>
 
                 {/* Submit Button */}
