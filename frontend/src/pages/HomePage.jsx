@@ -466,6 +466,63 @@ const HomePage = () => {
         </div>
       </section>
 
+      {/* Chatbot Section */}
+      <section className="relative py-16 sm:py-20 bg-gradient-to-b from-slate-950 to-slate-900">
+        <div className="section-padding">
+          <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+            >
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/30 mb-5">
+                <MessageSquare className="h-4 w-4 text-emerald-300" />
+                <span className="text-sm font-semibold text-emerald-200">New: AI Careers Assistant</span>
+              </div>
+              <h2 className="text-3xl sm:text-4xl font-bold text-emerald-100 mb-4">
+                Need help choosing the right role?
+              </h2>
+              <p className="text-emerald-100/80 text-base sm:text-lg leading-relaxed mb-6">
+                Use our chatbot to discover roles by skills, understand the hiring flow, and get guidance before you apply.
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <span className="px-3 py-1.5 rounded-full text-sm bg-emerald-500/10 text-emerald-200 border border-emerald-500/20">Role Suggestions</span>
+                <span className="px-3 py-1.5 rounded-full text-sm bg-emerald-500/10 text-emerald-200 border border-emerald-500/20">Application Help</span>
+                <span className="px-3 py-1.5 rounded-full text-sm bg-emerald-500/10 text-emerald-200 border border-emerald-500/20">Hiring Timeline</span>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              className="card p-5 sm:p-6"
+            >
+              <div className="rounded-xl border border-emerald-500/20 bg-slate-950/70 p-4 space-y-3">
+                <div className="text-sm text-emerald-100/70">Sample chat preview</div>
+                <div className="ml-auto max-w-[85%] bg-emerald-600 text-white px-3 py-2 rounded-xl text-sm">
+                  I know React, Node.js, and MongoDB. Which role fits me?
+                </div>
+                <div className="max-w-[90%] bg-slate-800 border border-emerald-500/20 text-emerald-100 px-3 py-2 rounded-xl text-sm">
+                  Great profile! You can explore Full-Stack Developer and Backend Developer roles. Want me to shortlist open positions?
+                </div>
+                <div className="flex flex-wrap gap-2 pt-2">
+                  <button className="px-3 py-1.5 rounded-lg text-xs bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-200">
+                    Show matching roles
+                  </button>
+                  <button className="px-3 py-1.5 rounded-lg text-xs bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-200">
+                    Explain hiring steps
+                  </button>
+                  <button className="px-3 py-1.5 rounded-lg text-xs bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-200">
+                    Help me apply
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
       {/* Testimonials - Enhanced */}
       <section className="relative py-16 sm:py-20 md:py-24 bg-gradient-to-b from-slate-900 to-slate-900 overflow-hidden">
         <div className="absolute inset-0 opacity-50" style={{
