@@ -124,7 +124,7 @@ const Navbar = () => {
                   className={`flex items-center justify-between px-4 py-4 rounded-xl transition-all duration-300 ${
                     location.pathname === item.path
                       ? "bg-gradient-to-r from-emerald-500/20 to-green-500/10 text-emerald-300"
-                      : "text-emerald-100 hover:bg-gray-50/80"
+                      : "text-emerald-100 hover:bg-emerald-500/10"
                   }`}
                 >
                   <span className="font-medium">{item.name}</span>

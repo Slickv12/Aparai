@@ -23,6 +23,44 @@ import {
   Star
 } from 'lucide-react';
 
+const AnimatedStatValue = ({ value }) => {
+  if (value.includes('%')) {
+    const target = parseInt(value, 10);
+    return <CountUp end={target} suffix="%" />;
+  }
+  if (value.includes('/5')) {
+    return <span>{value}</span>;
+  }
+  if (value.includes('+')) {
+    const target = parseInt(value, 10);
+    return <CountUp end={target} suffix="+" />;
+  }
+  return <span>{value}</span>;
+};
+
+const CountUp = ({ end, suffix = '' }) => {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    let current = 0;
+    const steps = 24;
+    const stepValue = Math.max(1, Math.ceil(end / steps));
+    const interval = setInterval(() => {
+      current += stepValue;
+      if (current >= end) {
+        setCount(end);
+        clearInterval(interval);
+        return;
+      }
+      setCount(current);
+    }, 35);
+
+    return () => clearInterval(interval);
+  }, [end]);
+
+  return <span>{count}{suffix}</span>;
+};
+
 const HomePage = () => {
   const dynamicWords = ['Innovators', 'Builders', 'Creators', 'Problem Solvers'];
   const [wordIndex, setWordIndex] = useState(0);
@@ -283,7 +321,9 @@ const HomePage = () => {
                       {stat.change}
                     </span>
                   </div>
-                  <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-emerald-100 mb-1 sm:mb-2">{stat.value}</div>
+                  <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-emerald-100 mb-1 sm:mb-2">
+                    <AnimatedStatValue value={stat.value} />
+                  </div>
                   <div className="text-sm sm:text-base text-emerald-100/80 font-medium">{stat.label}</div>
                   <div className="mt-2 sm:mt-4 h-0.5 sm:h-1 w-8 sm:w-12 bg-gradient-to-r from-emerald-500 to-emerald-500 rounded-full"></div>
                 </div>
@@ -324,9 +364,9 @@ const HomePage = () => {
       </section>
 
       {/* Hiring Process - Enhanced */}
-      <section className="relative py-16 sm:py-20 md:py-24 bg-gradient-to-br from-slate-50 to-green-50 overflow-hidden">
-        <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-to-bl from-emerald-500/5 to-emerald-500/5 rounded-full -translate-y-1/2 translate-x-1/3"></div>
-        <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-gradient-to-tr from-green-500/5 to-purple-500/5 rounded-full translate-y-1/2 -translate-x-1/3"></div>
+      <section className="relative py-16 sm:py-20 md:py-24 bg-gradient-to-br from-slate-950 to-slate-900 overflow-hidden">
+        <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-to-bl from-emerald-500/10 to-green-500/5 rounded-full -translate-y-1/2 translate-x-1/3"></div>
+        <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-gradient-to-tr from-green-500/10 to-emerald-500/5 rounded-full translate-y-1/2 -translate-x-1/3"></div>
         
         <div className="relative px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
           <div className="text-center mb-12 sm:mb-16 md:mb-20">
@@ -334,10 +374,10 @@ const HomePage = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
-              className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-gradient-to-r from-emerald-50 to-emerald-50 border border-emerald-100 mb-4 sm:mb-6"
+              className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-gradient-to-r from-emerald-500/15 to-green-500/10 border border-emerald-500/30 mb-4 sm:mb-6"
             >
               <Zap className="h-3 w-3 sm:h-4 sm:w-4 text-emerald-600" />
-              <span className="text-xs sm:text-sm font-semibold text-emerald-700">Fast & Efficient</span>
+              <span className="text-xs sm:text-sm font-semibold text-emerald-200">Fast & Efficient</span>
             </motion.div>
             
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-emerald-100 mb-4 sm:mb-6">
@@ -350,7 +390,7 @@ const HomePage = () => {
 
           <div className="relative">
             {/* Enhanced Timeline - Desktop Only */}
-            <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-1.5 sm:h-2 bg-gradient-to-r from-emerald-200 via-indigo-200 to-purple-200 transform -translate-y-1/2 rounded-full overflow-hidden">
+            <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-1.5 sm:h-2 bg-gradient-to-r from-emerald-500/30 via-green-500/20 to-emerald-500/30 transform -translate-y-1/2 rounded-full overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-emerald-500 opacity-20"></div>
             </div>
             
@@ -358,7 +398,7 @@ const HomePage = () => {
             {hiringProcess.map((_, index) => (
               <div key={index} className="hidden lg:block absolute top-1/2 left-0 transform -translate-y-1/2" 
                 style={{ left: `${(index + 0.5) * (100 / hiringProcess.length)}%` }}>
-                <div className="w-3 h-3 sm:w-4 sm:h-4 bg-gradient-to-r from-emerald-600 to-emerald-600 rounded-full border-4 border-white shadow-lg"></div>
+                <div className="w-3 h-3 sm:w-4 sm:h-4 bg-gradient-to-r from-emerald-500 to-green-500 rounded-full border-4 border-slate-950 shadow-lg"></div>
               </div>
             ))}
             
@@ -372,24 +412,24 @@ const HomePage = () => {
                   transition={{ duration: 0.4, delay: index * 0.1 }}
                   className="relative"
                 >
-                  <div className="group relative bg-slate-900 rounded-lg sm:rounded-xl p-6 sm:p-8 border border-slate-200 shadow-sm hover:shadow-md sm:hover:shadow-xl hover:border-emerald-200 transition-all duration-300 h-full">
+                  <div className="group relative bg-slate-900 rounded-lg sm:rounded-xl p-6 sm:p-8 border border-emerald-500/20 shadow-sm hover:shadow-md sm:hover:shadow-xl hover:border-emerald-400 transition-all duration-300 h-full">
                     {/* Step number */}
                     <div className="absolute -top-3 sm:-top-4 left-1/2 transform -translate-x-1/2 w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-gradient-to-r from-emerald-600 to-emerald-600 rounded-full flex items-center justify-center text-white font-bold text-sm sm:text-base md:text-lg shadow-lg">
                       {step.step}
                     </div>
                     
                     <div className="pt-4 sm:pt-4">
-                      <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 mx-auto mb-4 sm:mb-6 bg-gradient-to-br from-emerald-50 to-emerald-50 rounded-lg sm:rounded-xl flex items-center justify-center group-hover:scale-105 sm:group-hover:scale-110 transition-transform duration-300">
-                        <div className="text-emerald-600 group-hover:text-indigo-700 transition-colors h-5 w-5 sm:h-6 sm:w-6">{step.icon}</div>
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 mx-auto mb-4 sm:mb-6 bg-gradient-to-br from-emerald-500/15 to-green-500/15 rounded-lg sm:rounded-xl flex items-center justify-center group-hover:scale-105 sm:group-hover:scale-110 transition-transform duration-300">
+                        <div className="text-emerald-300 group-hover:text-emerald-200 transition-colors h-5 w-5 sm:h-6 sm:w-6">{step.icon}</div>
                       </div>
                       
                       <div className="text-center">
                         <h3 className="text-base sm:text-lg font-bold text-emerald-100 mb-2 sm:mb-3">{step.title}</h3>
                         <p className="text-sm text-emerald-100/80 mb-3 sm:mb-4 leading-relaxed">{step.description}</p>
                         
-                        <div className="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3 py-1.5 sm:px-4 sm:py-2 bg-gradient-to-r from-emerald-50 to-emerald-50 rounded-full">
+                        <div className="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3 py-1.5 sm:px-4 sm:py-2 bg-gradient-to-r from-emerald-500/15 to-green-500/10 rounded-full">
                           <Clock className="h-3 w-3 sm:h-4 sm:w-4 text-emerald-600" />
-                          <span className="text-xs sm:text-sm font-medium text-emerald-700">{step.time}</span>
+                          <span className="text-xs sm:text-sm font-medium text-emerald-200">{step.time}</span>
                         </div>
                       </div>
                     </div>

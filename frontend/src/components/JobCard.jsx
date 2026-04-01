@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, Briefcase, Clock, ChevronRight, Laptop } from 'lucide-react';
+import { MapPin, Briefcase, Clock, ChevronRight, Laptop, Heart, Eye } from 'lucide-react';
 
-const JobCard = ({ job }) => {
+const JobCard = ({ job, isFavorite, onToggleFavorite, onQuickView }) => {
   return (
     <div className="card p-6 hover:shadow-lg transition-all duration-300 group">
       <div className="flex flex-col">
@@ -13,13 +13,31 @@ const JobCard = ({ job }) => {
             </h3>
             <p className="text-emerald-100/80 mt-1">{job.department}</p>
           </div>
-          <span className={`px-3 py-1 text-sm font-semibold rounded-full ${
-            job.type === 'Internship' 
-              ? 'bg-purple-100 text-purple-800'
-              : 'bg-green-100 text-green-800'
-          }`}>
-            {job.type}
-          </span>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => onQuickView?.(job)}
+              className="p-2 rounded-full bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300"
+              aria-label="Quick view"
+            >
+              <Eye className="h-4 w-4" />
+            </button>
+            <button
+              type="button"
+              onClick={() => onToggleFavorite?.(job._id)}
+              className="p-2 rounded-full bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300"
+              aria-label="Save job"
+            >
+              <Heart className={`h-4 w-4 ${isFavorite ? 'fill-emerald-400 text-emerald-400' : ''}`} />
+            </button>
+            <span className={`px-3 py-1 text-sm font-semibold rounded-full ${
+              job.type === 'Internship' 
+                ? 'bg-purple-100 text-purple-800'
+                : 'bg-green-100 text-green-800'
+            }`}>
+              {job.type}
+            </span>
+          </div>
         </div>
         
         <div className="flex flex-wrap items-center gap-4 mb-4 text-emerald-100/80">
