@@ -643,7 +643,7 @@ const ApplyFormPage = () => {
                     </div>
                   </label>
                   <div className="mt-1">
-                    <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-purple-500/10">
+                    <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-purple-500/30 border-dashed rounded-lg cursor-pointer bg-slate-900/60 hover:bg-purple-500/10">
                       <div className="flex flex-col items-center justify-center pt-5 pb-6">
                         <Upload className="h-8 w-8 text-cyan-200/60 mb-2" />
                         {formData.resume ? (
@@ -652,13 +652,13 @@ const ApplyFormPage = () => {
                           </p>
                         ) : (
                           <>
-                            <p className="mb-1 text-sm text-gray-500">
+                            <p className="mb-1 text-sm text-slate-300/80">
                               <span className="font-semibold">
                                 Click to upload
                               </span>{" "}
                               or drag and drop
                             </p>
-                            <p className="text-xs text-gray-500">
+                            <p className="text-xs text-slate-300/70">
                               PDF file only (Max 5MB)
                             </p>
                           </>
@@ -775,7 +775,7 @@ const ApplyFormPage = () => {
                     )}
                   </button>
 
-                  <p className="text-sm text-gray-500 text-center mt-4">
+                  <p className="text-sm text-slate-300/70 text-center mt-4">
                     By submitting this application, you agree to our{" "}
                     <a href="#" className="text-cyan-300 hover:text-cyan-200">
                       Privacy Policy
