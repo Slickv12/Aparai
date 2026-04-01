@@ -4,8 +4,8 @@ import { MapPin, Briefcase, Clock, ChevronRight, Laptop, Heart, Eye } from 'luci
 
 const JobCard = ({ job, isFavorite, onToggleFavorite, onQuickView }) => {
   return (
-    <div className="card p-6 hover:shadow-lg transition-all duration-300 group">
-      <div className="flex flex-col">
+    <div className="card p-5 h-full hover:shadow-lg transition-all duration-300 group">
+      <div className="flex flex-col h-full">
         <div className="flex items-start justify-between mb-4">
           <div>
             <h3 className="text-xl font-bold text-emerald-100 group-hover:text-emerald-300 transition-colors">
@@ -40,7 +40,7 @@ const JobCard = ({ job, isFavorite, onToggleFavorite, onQuickView }) => {
           </div>
         </div>
         
-        <div className="flex flex-wrap items-center gap-4 mb-4 text-emerald-100/80">
+        <div className="flex flex-wrap items-center gap-3 mb-4 text-emerald-100/80 text-sm">
           <div className="flex items-center space-x-2">
             <MapPin className="h-4 w-4" />
             <span>{job.location}</span>
@@ -61,9 +61,9 @@ const JobCard = ({ job, isFavorite, onToggleFavorite, onQuickView }) => {
           </div>
         </div>
 
-        <p className="text-emerald-100/80 mb-6 line-clamp-2">{job.description}</p>
+        <p className="text-emerald-100/80 mb-5 line-clamp-3 text-sm leading-relaxed">{job.description}</p>
 
-        <div className="flex flex-wrap gap-2 mb-6">
+        <div className="flex flex-wrap gap-2 mb-5">
           {job.techStack.slice(0, 4).map((tech, index) => (
             <span
               key={index}
@@ -79,8 +79,8 @@ const JobCard = ({ job, isFavorite, onToggleFavorite, onQuickView }) => {
           )}
         </div>
 
-        <div className="flex items-center justify-between pt-4 border-t border-emerald-500/20">
-          <div className="text-lg font-bold text-emerald-100">
+        <div className="flex items-center justify-between pt-4 border-t border-emerald-500/20 mt-auto">
+          <div className="text-base md:text-lg font-bold text-emerald-100">
             {job.salaryRange}
           </div>
           <Link

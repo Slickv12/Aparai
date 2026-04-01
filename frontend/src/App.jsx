@@ -11,7 +11,7 @@ function App() {
     <Router>
       <div className="min-h-screen flex flex-col">
         <Navbar />
-        <main className="flex-grow">
+        <main className="flex-grow pt-20 md:pt-24">
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/positions" element={<OpenPositionsPage />} />

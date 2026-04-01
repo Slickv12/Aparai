@@ -120,7 +120,7 @@ const OpenPositionsPage = () => {
 
   return (
     <div className="min-h-screen">
-      <div className="section-padding py-8">
+      <div className="section-padding py-8 md:py-10">
         <PageHeader
           title="Open Positions"
           subtitle="Find your perfect role and join our team of innovators"
@@ -133,10 +133,12 @@ const OpenPositionsPage = () => {
           </div>
         </PageHeader>
 
-        <FilterBar onFilterChange={handleFilterChange} />
+        <div className="sticky top-24 z-30 mb-8">
+          <FilterBar onFilterChange={handleFilterChange} />
+        </div>
 
         {loading ? (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 xl:gap-6">
             {[...Array(4)].map((_, idx) => (
               <div key={idx} className="card p-6 animate-pulse">
                 <div className="h-6 w-2/3 bg-emerald-500/20 rounded mb-4"></div>
@@ -152,7 +154,7 @@ const OpenPositionsPage = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
-            className="grid grid-cols-1 lg:grid-cols-2 gap-6"
+            className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 xl:gap-6 items-stretch"
           >
             {filteredJobs.map((job, index) => (
               <motion.div

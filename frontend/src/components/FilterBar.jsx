@@ -29,7 +29,7 @@ const FilterBar = ({ onFilterChange }) => {
   const hasActiveFilters = Object.values(filters).some(value => value !== '');
 
   return (
-    <div className="card p-6 mb-8">
+    <div className="card p-4 md:p-5 mb-0">
       <div className="flex flex-col lg:flex-row lg:items-center gap-4">
         {/* Search Input */}
         <div className="flex-1">

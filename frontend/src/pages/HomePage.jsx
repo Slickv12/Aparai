@@ -168,7 +168,7 @@ const HomePage = () => {
           backgroundSize: '30px 30px'
         }}></div>
         
-        <div className="relative px-4 sm:px-6 lg:px-8 py-20 md:py-32">
+        <div className="relative px-4 sm:px-6 lg:px-8 py-16 md:py-24 lg:py-28">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -300,7 +300,7 @@ const HomePage = () => {
           </div>
 
           {/* Enhanced Stats */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-12 sm:mb-16 md:mb-20">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-12 sm:mb-16 md:mb-20 items-stretch">
             {stats.map((stat, index) => (
               <motion.div
                 key={index}
@@ -312,7 +312,7 @@ const HomePage = () => {
                 className="relative group"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-emerald-500 rounded-xl sm:rounded-2xl opacity-0 group-hover:opacity-10 blur transition-all duration-300"></div>
-                <div className="relative bg-slate-900 rounded-lg sm:rounded-xl p-4 sm:p-6 md:p-8 border border-slate-200 shadow-sm hover:shadow-md sm:hover:shadow-xl hover:border-emerald-200 transition-all duration-300">
+                <div className="relative bg-slate-900 rounded-lg sm:rounded-xl p-4 sm:p-6 md:p-8 border border-emerald-500/20 shadow-sm hover:shadow-md sm:hover:shadow-xl hover:border-emerald-300 transition-all duration-300 h-full">
                   <div className="flex justify-between items-start mb-4 sm:mb-6">
                     <div className={`p-2 sm:p-3 bg-gradient-to-br ${index === 0 ? 'from-emerald-500 to-cyan-400' : index === 1 ? 'from-green-500 to-purple-400' : index === 2 ? 'from-rose-500 to-pink-400' : 'from-violet-500 to-purple-400'} rounded-lg`}>
                       <div className="text-white">{stat.icon}</div>
@@ -332,7 +332,7 @@ const HomePage = () => {
           </div>
 
           {/* Enhanced Culture Items */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6 lg:gap-7 items-stretch">
             {cultureItems.map((item, index) => (
               <motion.div
                 key={index}
@@ -344,7 +344,7 @@ const HomePage = () => {
                 className="relative group"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-emerald-500 to-emerald-500 rounded-xl sm:rounded-2xl opacity-0 group-hover:opacity-5 blur transition-all duration-300"></div>
-                <div className="relative bg-slate-900 rounded-lg sm:rounded-xl p-6 sm:p-8 border border-slate-200 shadow-sm hover:shadow-md sm:hover:shadow-xl hover:border-emerald-200 transition-all duration-300 h-full">
+                <div className="relative bg-slate-900 rounded-lg sm:rounded-xl p-5 sm:p-6 border border-emerald-500/20 shadow-sm hover:shadow-md sm:hover:shadow-xl hover:border-emerald-300 transition-all duration-300 h-full">
                   <div className="flex flex-col h-full">
                     <div className={`p-3 sm:p-4 bg-gradient-to-br ${item.gradient} rounded-lg sm:rounded-xl w-fit mb-4 sm:mb-6 shadow-md sm:shadow-lg`}>
                       <div className="text-white">{item.icon}</div>
@@ -505,7 +505,7 @@ const HomePage = () => {
                 className="relative group"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-emerald-500 to-emerald-500 rounded-xl sm:rounded-2xl opacity-0 group-hover:opacity-5 blur transition-all duration-300"></div>
-                <div className="relative bg-slate-900 rounded-lg sm:rounded-xl p-6 sm:p-8 border border-slate-200 shadow-sm hover:shadow-md sm:hover:shadow-xl hover:border-emerald-200 transition-all duration-300 h-full">
+                <div className="relative bg-slate-900 rounded-lg sm:rounded-xl p-5 sm:p-6 border border-emerald-500/20 shadow-sm hover:shadow-md sm:hover:shadow-xl hover:border-emerald-300 transition-all duration-300 h-full">
                   {/* Rating stars */}
                   <div className="flex gap-0.5 sm:gap-1 mb-4 sm:mb-6">
                     {[...Array(testimonial.rating)].map((_, i) => (
