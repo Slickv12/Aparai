@@ -61,6 +61,8 @@ const ApplyFormPage = () => {
   const [resumeText, setResumeText] = useState("");
   const [detectedSkills, setDetectedSkills] = useState([]);
   const [suggestedRoles, setSuggestedRoles] = useState([]);
+  const [resumeScore, setResumeScore] = useState(0);
+  const [resumeFeedback, setResumeFeedback] = useState([]);
   const [analysisLoading, setAnalysisLoading] = useState(false);
   const [analysisError, setAnalysisError] = useState("");
 
@@ -96,6 +98,38 @@ const ApplyFormPage = () => {
     return Array.from(new Set(roles));
   };
 
+  const calculateResumeScore = (text, skills) => {
+    let score = 0;
+    const hasFramework = ["react", "angular", "vue", "node", "express", "django", "spring"].some((k) =>
+      text.includes(k)
+    );
+    const hasExperience = ["experience", "internship", "intern", "worked at", "employment"].some((k) =>
+      text.includes(k)
+    );
+
+    if (skills.length >= 5) score += 20;
+    if (text.includes("github")) score += 20;
+    if (text.includes("project")) score += 20;
+    if (hasFramework) score += 20;
+    if (hasExperience) score += 20;
+
+    return Math.min(score, 100);
+  };
+
+  const generateResumeFeedback = (text, skills) => {
+    const feedback = [];
+
+    if (!text.includes("github")) feedback.push("Add GitHub profile or project links.");
+    if (!text.includes("project")) feedback.push("Include a section describing your projects.");
+    if (skills.length < 3) feedback.push("List more technical skills relevant to your target role.");
+    if (!text.includes("internship") && !text.includes("experience")) {
+      feedback.push("Mention internships, freelance work, or practical experience.");
+    }
+    if (!feedback.length) feedback.push("Great resume structure! Keep tailoring it for each role.");
+
+    return feedback;
+  };
+
   const extractResumeText = async (file) => {
     let pdfjsLib;
     try {
@@ -128,6 +162,8 @@ const ApplyFormPage = () => {
     setAnalysisError("");
     setDetectedSkills([]);
     setSuggestedRoles([]);
+    setResumeScore(0);
+    setResumeFeedback([]);
     setResumeText("");
 
     if (!file) return;
@@ -141,10 +177,14 @@ const ApplyFormPage = () => {
       const extractedText = await extractResumeText(file);
       const skills = detectSkills(extractedText);
       const roles = suggestRoles(skills);
+      const score = calculateResumeScore(extractedText, skills);
+      const feedback = generateResumeFeedback(extractedText, skills);
 
       setResumeText(extractedText);
       setDetectedSkills(skills);
       setSuggestedRoles(roles);
+      setResumeScore(score);
+      setResumeFeedback(feedback);
     } catch (error) {
       setAnalysisError("Unable to parse this PDF. Please try another resume file.");
     } finally {
@@ -654,6 +694,18 @@ const ApplyFormPage = () => {
                       className="space-y-4"
                     >
                       <div>
+                        <p className="text-sm text-emerald-200 mb-2">Resume Score:</p>
+                        <div className="w-full bg-slate-800 rounded-full h-3 border border-emerald-500/20 overflow-hidden">
+                          <div
+                            className="h-full bg-gradient-to-r from-emerald-500 to-green-500 transition-all duration-700"
+                            style={{ width: `${resumeScore}%` }}
+                          />
+                        </div>
+                        <p className="text-xs text-emerald-100/70 mt-1">{resumeScore}/100</p>
+                        <p className="text-xs text-emerald-100/60 mt-1">Parsed text length: {resumeText.length} chars</p>
+                      </div>
+
+                      <div>
                         <p className="text-sm text-emerald-200 mb-2">Detected Skills:</p>
                         {detectedSkills.length ? (
                           <div className="flex flex-wrap gap-2">
@@ -673,9 +725,23 @@ const ApplyFormPage = () => {
 
                       <div>
                         <p className="text-sm text-emerald-200 mb-2">Suggested Roles:</p>
-                        <ul className="list-disc list-inside text-sm text-emerald-100/90 space-y-1">
+                        <div className="flex flex-wrap gap-2">
                           {suggestedRoles.map((role) => (
-                            <li key={role}>{role}</li>
+                            <span
+                              key={role}
+                              className="px-2.5 py-1 rounded-full text-xs bg-emerald-500/20 border border-emerald-500/30 text-emerald-100"
+                            >
+                              {role}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div>
+                        <p className="text-sm text-emerald-200 mb-2">Resume Feedback:</p>
+                        <ul className="list-disc list-inside text-sm text-emerald-100/90 space-y-1">
+                          {resumeFeedback.map((item, idx) => (
+                            <li key={`${item}-${idx}`}>{item}</li>
                           ))}
                         </ul>
                       </div>
