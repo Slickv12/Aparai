@@ -21,6 +21,13 @@ import {
 } from "lucide-react";
 
 const ApplyFormPage = () => {
+  const skillKeywords = {
+    frontend: ["react", "javascript", "html", "css", "tailwind", "redux", "next.js"],
+    backend: ["node", "express", "mongodb", "sql", "postgres", "rest api", "jwt"],
+    data: ["python", "pandas", "machine learning", "numpy", "power bi", "tableau"],
+    devops: ["docker", "kubernetes", "aws", "ci/cd", "terraform"],
+  };
+
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const defaultRole = queryParams.get("role") || "";
@@ -50,6 +57,140 @@ const ApplyFormPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState("");
+  const [resumeFile, setResumeFile] = useState(null);
+  const [resumeText, setResumeText] = useState("");
+  const [detectedSkills, setDetectedSkills] = useState([]);
+  const [suggestedRoles, setSuggestedRoles] = useState([]);
+  const [resumeScore, setResumeScore] = useState(0);
+  const [resumeFeedback, setResumeFeedback] = useState([]);
+  const [analysisLoading, setAnalysisLoading] = useState(false);
+  const [analysisError, setAnalysisError] = useState("");
+
+  const detectSkills = (text) => {
+    const lowerText = text.toLowerCase();
+    const found = [];
+
+    Object.entries(skillKeywords).forEach(([category, keywords]) => {
+      keywords.forEach((keyword) => {
+        if (lowerText.includes(keyword.toLowerCase())) {
+          found.push({ category, skill: keyword });
+        }
+      });
+    });
+
+    return Array.from(new Set(found.map((item) => `${item.category}:${item.skill}`))).map((item) => {
+      const [category, skill] = item.split(":");
+      return { category, skill };
+    });
+  };
+
+  const suggestRoles = (skills) => {
+    const categories = new Set(skills.map((s) => s.category));
+    const roles = [];
+
+    if (categories.has("frontend")) roles.push("Frontend Developer");
+    if (categories.has("backend")) roles.push("Backend Developer");
+    if (categories.has("frontend") && categories.has("backend")) roles.push("Full Stack Developer");
+    if (categories.has("data")) roles.push("Data Analyst");
+    if (categories.has("devops")) roles.push("DevOps Engineer");
+
+    if (!roles.length) roles.push("Software Engineer (General)");
+    return Array.from(new Set(roles));
+  };
+
+  const calculateResumeScore = (text, skills) => {
+    let score = 0;
+    const hasFramework = ["react", "angular", "vue", "node", "express", "django", "spring"].some((k) =>
+      text.includes(k)
+    );
+    const hasExperience = ["experience", "internship", "intern", "worked at", "employment"].some((k) =>
+      text.includes(k)
+    );
+
+    if (skills.length >= 5) score += 20;
+    if (text.includes("github")) score += 20;
+    if (text.includes("project")) score += 20;
+    if (hasFramework) score += 20;
+    if (hasExperience) score += 20;
+
+    return Math.min(score, 100);
+  };
+
+  const generateResumeFeedback = (text, skills) => {
+    const feedback = [];
+
+    if (!text.includes("github")) feedback.push("Add GitHub profile or project links.");
+    if (!text.includes("project")) feedback.push("Include a section describing your projects.");
+    if (skills.length < 3) feedback.push("List more technical skills relevant to your target role.");
+    if (!text.includes("internship") && !text.includes("experience")) {
+      feedback.push("Mention internships, freelance work, or practical experience.");
+    }
+    if (!feedback.length) feedback.push("Great resume structure! Keep tailoring it for each role.");
+
+    return feedback;
+  };
+
+  const extractResumeText = async (file) => {
+    let pdfjsLib;
+    try {
+      const localPdfJsPath = "pdfjs-dist/build/pdf.mjs";
+      pdfjsLib = await import(/* @vite-ignore */ localPdfJsPath);
+    } catch (error) {
+      pdfjsLib = await import(
+        /* @vite-ignore */ "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.10.38/build/pdf.min.mjs"
+      );
+    }
+
+    const workerSrc = "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.10.38/build/pdf.worker.min.mjs";
+    pdfjsLib.GlobalWorkerOptions.workerSrc = workerSrc;
+
+    const buffer = await file.arrayBuffer();
+    const pdf = await pdfjsLib.getDocument({ data: buffer }).promise;
+    const pages = [];
+
+    for (let pageNum = 1; pageNum <= pdf.numPages; pageNum += 1) {
+      const page = await pdf.getPage(pageNum);
+      const textContent = await page.getTextContent();
+      const pageText = textContent.items.map((item) => item.str).join(" ");
+      pages.push(pageText);
+    }
+
+    return pages.join(" ").toLowerCase();
+  };
+
+  const analyzeResume = async (file) => {
+    setAnalysisError("");
+    setDetectedSkills([]);
+    setSuggestedRoles([]);
+    setResumeScore(0);
+    setResumeFeedback([]);
+    setResumeText("");
+
+    if (!file) return;
+    if (file.type !== "application/pdf") {
+      setAnalysisError("Resume analysis supports PDF files only.");
+      return;
+    }
+
+    try {
+      setAnalysisLoading(true);
+      const extractedText = await extractResumeText(file);
+      const skills = detectSkills(extractedText);
+      const roles = suggestRoles(skills);
+      const score = calculateResumeScore(extractedText, skills);
+      const feedback = generateResumeFeedback(extractedText, skills);
+
+      setResumeText(extractedText);
+      setDetectedSkills(skills);
+      setSuggestedRoles(roles);
+      setResumeScore(score);
+      setResumeFeedback(feedback);
+    } catch (error) {
+      setAnalysisError("Unable to parse this PDF. Please try another resume file.");
+    } finally {
+      setAnalysisLoading(false);
+    }
+  };
 
   // ✅ Fetch jobs from backend to generate roles list
   useEffect(() => {
@@ -113,7 +254,10 @@ const ApplyFormPage = () => {
     const { name, value, files } = e.target;
 
     if (name === "resume") {
-      setFormData((prev) => ({ ...prev, resume: files[0] }));
+      const file = files?.[0] || null;
+      setResumeFile(file);
+      setFormData((prev) => ({ ...prev, resume: file }));
+      analyzeResume(file);
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
     }
@@ -198,7 +342,12 @@ const ApplyFormPage = () => {
   }, [isSubmitted]);
 
   return (
-    <div className="min-h-screen">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+      className="min-h-screen"
+    >
       <div className="section-padding py-8">
         <PageHeader
           title="Apply Now"
@@ -215,14 +364,14 @@ const ApplyFormPage = () => {
               <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
                 <CheckCircle className="h-10 w-10 text-green-600" />
               </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-3">
+              <h3 className="text-2xl font-bold text-slate-100 mb-3">
                 ✅ Application Submitted Successfully!
               </h3>
-              <p className="text-gray-600 mb-6">
+              <p className="text-slate-100/80 mb-6">
                 Thank you for applying to Aparaitech. Our hiring team will review
                 your application and contact you within 5-7 business days.
               </p>
-              <div className="bg-blue-50 p-4 rounded-lg">
+              <div className="bg-purple-500/10 p-4 rounded-lg">
                 <p className="text-blue-800">
                   <strong>Next steps:</strong> Check your email for a
                   confirmation and next steps.
@@ -249,7 +398,7 @@ const ApplyFormPage = () => {
                 {/* Personal Information */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-slate-100/90 mb-2">
                       <div className="flex items-center space-x-2">
                         <User className="h-4 w-4" />
                         <span>Full Name *</span>
@@ -275,7 +424,7 @@ const ApplyFormPage = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-slate-100/90 mb-2">
                       <div className="flex items-center space-x-2">
                         <Mail className="h-4 w-4" />
                         <span>Email Address *</span>
@@ -301,7 +450,7 @@ const ApplyFormPage = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-slate-100/90 mb-2">
                       <div className="flex items-center space-x-2">
                         <Phone className="h-4 w-4" />
                         <span>Phone Number *</span>
@@ -327,7 +476,7 @@ const ApplyFormPage = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-slate-100/90 mb-2">
                       <div className="flex items-center space-x-2">
                         <MapPin className="h-4 w-4" />
                         <span>Location *</span>
@@ -356,7 +505,7 @@ const ApplyFormPage = () => {
                 {/* Professional Information */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-slate-100/90 mb-2">
                       <div className="flex items-center space-x-2">
                         <Briefcase className="h-4 w-4" />
                         <span>Role Applying For *</span>
@@ -392,7 +541,7 @@ const ApplyFormPage = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-slate-100/90 mb-2">
                       <div className="flex items-center space-x-2">
                         <Award className="h-4 w-4" />
                         <span>Experience Level *</span>
@@ -425,7 +574,7 @@ const ApplyFormPage = () => {
 
                 {/* Skills */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-slate-100/90 mb-2">
                     <div className="flex items-center space-x-2">
                       <Code className="h-4 w-4" />
                       <span>Skills & Technologies *</span>
@@ -451,7 +600,7 @@ const ApplyFormPage = () => {
                 {/* Social Links */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-slate-100/90 mb-2">
                       <div className="flex items-center space-x-2">
                         <Linkedin className="h-4 w-4" />
                         <span>LinkedIn Profile (Optional)</span>
@@ -468,7 +617,7 @@ const ApplyFormPage = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-slate-100/90 mb-2">
                       <div className="flex items-center space-x-2">
                         <Github className="h-4 w-4" />
                         <span>GitHub Profile (Optional)</span>
@@ -487,29 +636,29 @@ const ApplyFormPage = () => {
 
                 {/* Resume Upload */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-slate-100/90 mb-2">
                     <div className="flex items-center space-x-2">
                       <FileText className="h-4 w-4" />
                       <span>Resume (PDF only) *</span>
                     </div>
                   </label>
                   <div className="mt-1">
-                    <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+                    <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-purple-500/30 border-dashed rounded-lg cursor-pointer bg-slate-900/60 hover:bg-purple-500/10">
                       <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                        <Upload className="h-8 w-8 text-gray-400 mb-2" />
+                        <Upload className="h-8 w-8 text-cyan-200/60 mb-2" />
                         {formData.resume ? (
-                          <p className="text-sm text-gray-900 font-medium">
+                          <p className="text-sm text-slate-100 font-medium">
                             {formData.resume.name}
                           </p>
                         ) : (
                           <>
-                            <p className="mb-1 text-sm text-gray-500">
+                            <p className="mb-1 text-sm text-slate-300/80">
                               <span className="font-semibold">
                                 Click to upload
                               </span>{" "}
                               or drag and drop
                             </p>
-                            <p className="text-xs text-gray-500">
+                            <p className="text-xs text-slate-300/70">
                               PDF file only (Max 5MB)
                             </p>
                           </>
@@ -528,11 +677,89 @@ const ApplyFormPage = () => {
                         {errors.resume}
                       </p>
                     )}
+                    {analysisError && (
+                      <p className="mt-2 text-sm text-red-500">{analysisError}</p>
+                    )}
                   </div>
                 </div>
 
+                {/* Resume Analysis */}
+                <div className="card p-5">
+                  <h4 className="text-lg font-semibold text-slate-100 mb-3">Resume Analysis</h4>
+
+                  {analysisLoading ? (
+                    <div className="flex items-center gap-2 text-cyan-200">
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                      <span className="text-sm">Analyzing your resume...</span>
+                    </div>
+                  ) : resumeFile ? (
+                    <motion.div
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="space-y-4"
+                    >
+                      <div>
+                        <p className="text-sm text-cyan-200 mb-2">Resume Score:</p>
+                        <div className="w-full bg-slate-800 rounded-full h-3 border border-purple-500/20 overflow-hidden">
+                          <div
+                            className="h-full bg-gradient-to-r from-purple-600 to-cyan-500 transition-all duration-1000"
+                            style={{ width: `${resumeScore}%` }}
+                          />
+                        </div>
+                        <p className="text-xs text-slate-100/70 mt-1">{resumeScore}/100</p>
+                        <p className="text-xs text-slate-100/60 mt-1">Parsed text length: {resumeText.length} chars</p>
+                      </div>
+
+                      <div>
+                        <p className="text-sm text-cyan-200 mb-2">Detected Skills:</p>
+                        {detectedSkills.length ? (
+                          <div className="flex flex-wrap gap-2">
+                            {detectedSkills.map((item, idx) => (
+                              <span
+                                key={`${item.skill}-${idx}`}
+                                className="px-2.5 py-1 rounded-full text-xs bg-purple-500/15 border border-purple-500/30 text-slate-100"
+                              >
+                                {item.skill}
+                              </span>
+                            ))}
+                          </div>
+                        ) : (
+                          <p className="text-sm text-slate-100/70">No known skills detected yet.</p>
+                        )}
+                      </div>
+
+                      <div>
+                        <p className="text-sm text-cyan-200 mb-2">Suggested Roles:</p>
+                        <div className="flex flex-wrap gap-2">
+                          {suggestedRoles.map((role) => (
+                            <span
+                              key={role}
+                              className="px-2.5 py-1 rounded-full text-xs bg-purple-500/20 border border-purple-500/30 text-slate-100"
+                            >
+                              {role}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div>
+                        <p className="text-sm text-cyan-200 mb-2">Resume Feedback:</p>
+                        <ul className="list-disc list-inside text-sm text-slate-100/90 space-y-1">
+                          {resumeFeedback.map((item, idx) => (
+                            <li key={`${item}-${idx}`}>{item}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    </motion.div>
+                  ) : (
+                    <p className="text-sm text-slate-100/70">
+                      Upload your resume to detect technical skills and get role suggestions.
+                    </p>
+                  )}
+                </div>
+
                 {/* Submit Button */}
-                <div className="pt-6 border-t border-gray-200">
+                <div className="pt-6 border-t border-purple-500/20">
                   <button
                     type="submit"
                     disabled={isSubmitting}
@@ -548,9 +775,9 @@ const ApplyFormPage = () => {
                     )}
                   </button>
 
-                  <p className="text-sm text-gray-500 text-center mt-4">
+                  <p className="text-sm text-slate-300/70 text-center mt-4">
                     By submitting this application, you agree to our{" "}
-                    <a href="#" className="text-blue-600 hover:text-blue-800">
+                    <a href="#" className="text-cyan-300 hover:text-cyan-200">
                       Privacy Policy
                     </a>
                     . We'll contact you via email regarding your application.
@@ -561,7 +788,7 @@ const ApplyFormPage = () => {
           )}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

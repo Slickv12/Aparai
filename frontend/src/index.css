@@ -2,28 +2,29 @@
 
 @layer base {
   body {
-    @apply bg-gray-50 text-gray-900 antialiased;
+    @apply text-slate-100 antialiased;
+    background-color: #0b0f19;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
 
 @layer components {
   .btn-primary {
-    @apply bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
+    @apply bg-gradient-to-r from-purple-600 to-cyan-500 hover:from-purple-700 hover:to-cyan-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 hover:shadow-lg hover:shadow-purple-500/30 hover:-translate-y-0.5 active:translate-y-0 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-slate-950;
   }
-  
+
   .btn-secondary {
-    @apply bg-white border border-gray-300 hover:border-gray-400 text-gray-800 font-semibold py-3 px-6 rounded-lg transition-all duration-200 hover:shadow-md active:translate-y-0 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2;
+    @apply bg-slate-900 border border-purple-500/30 hover:border-cyan-400 text-slate-100 font-semibold py-3 px-6 rounded-lg transition-all duration-200 hover:shadow-md active:translate-y-0 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-slate-950;
   }
-  
+
   .card {
-    @apply bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100;
+    @apply bg-white/5 backdrop-blur-lg rounded-xl shadow-lg transition-all duration-300 border border-white/10;
   }
-  
+
   .input-field {
-    @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all text-gray-900 placeholder-gray-500;
+    @apply w-full px-4 py-3 border border-purple-500/30 rounded-lg bg-slate-900 text-slate-100 placeholder-slate-300/50 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 outline-none transition-all;
   }
-  
+
   .section-padding {
     @apply px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto;
   }
