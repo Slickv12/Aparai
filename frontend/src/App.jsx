@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import ChatbotWidget from './components/ChatbotWidget';
 import HomePage from './pages/HomePage';
 import OpenPositionsPage from './pages/OpenPositionsPage';
 import ApplyFormPage from './pages/ApplyFormPage';
@@ -19,6 +20,7 @@ function App() {
           </Routes>
         </main>
         <Footer />
+        <ChatbotWidget />
       </div>
     </Router>
   );

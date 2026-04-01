@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
-import ChatbotWidget from '../components/ChatbotWidget';
 import { 
   Users, 
   Rocket, 
@@ -633,7 +632,6 @@ const HomePage = () => {
           </motion.div>
         </div>
       </section>
-      <ChatbotWidget />
     </div>
   );
 };
