@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import ChatbotWidget from '../components/ChatbotWidget';
 import { 
   Users, 
@@ -24,10 +24,21 @@ import {
 } from 'lucide-react';
 
 const HomePage = () => {
+  const dynamicWords = ['Innovators', 'Builders', 'Creators', 'Problem Solvers'];
+  const [wordIndex, setWordIndex] = useState(0);
+
   // Scroll to top on component mount
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setWordIndex((prev) => (prev + 1) % dynamicWords.length);
+    }, 2200);
+
+    return () => clearInterval(interval);
+  }, [dynamicWords.length]);
 
   const testimonials = [
   {
@@ -150,8 +161,24 @@ const HomePage = () => {
             </h1>
             
             <p className="text-base sm:text-lg md:text-xl text-slate-300 mb-8 sm:mb-12 max-w-3xl mx-auto px-4 leading-relaxed">
-              Build groundbreaking enterprise solutions with cutting-edge technology. 
-              Your career, accelerated by innovation and meaningful impact.
+              Build groundbreaking enterprise solutions with cutting-edge technology.
+              Your career, accelerated by innovation and meaningful impact for
+              {' '}
+              <span className="inline-block min-w-[170px] text-left font-semibold text-emerald-300">
+                <AnimatePresence mode="wait">
+                  <motion.span
+                    key={dynamicWords[wordIndex]}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.35 }}
+                    className="inline-block"
+                  >
+                    {dynamicWords[wordIndex]}
+                  </motion.span>
+                </AnimatePresence>
+              </span>
+              .
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center px-4">
